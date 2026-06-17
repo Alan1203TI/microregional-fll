@@ -60,7 +60,8 @@ function renderJudgeTimer() {
 
   const remaining = getRemainingSeconds();
   display.textContent = formatSeconds(remaining);
-  display.classList.toggle('danger', remaining <= 30 && remaining > 0);
+  display.classList.toggle('danger', remaining <= 30 && remaining > 10);
+  display.classList.toggle('critical', remaining <= 10 && remaining > 0);
   display.classList.toggle('finished', remaining === 0);
 
   if (remaining === 0) {
@@ -164,6 +165,20 @@ function getSelectedTeamName() {
   return teamSelect.options[teamSelect.selectedIndex].dataset.name || teamSelect.options[teamSelect.selectedIndex].textContent;
 }
 
+function renderJudgePanelInfo() {
+  const teamDisplay = $('currentTeamDisplay');
+  const roundDisplay = $('currentRoundDisplay');
+
+  if (teamDisplay) {
+    teamDisplay.textContent = getSelectedTeamName() || 'Selecione uma equipe';
+  }
+
+  if (roundDisplay) {
+    const round = $('roundSelect')?.value || 'TESTE';
+    roundDisplay.textContent = round === 'TESTE' ? 'Round TESTE' : `Round ${round}`;
+  }
+}
+
 function getLivePayload(status = 'editing') {
   const teamSelect = $('teamSelect');
 
@@ -239,6 +254,7 @@ function renderMissions() {
 
 function updateTotals() {
   $('totalScore').textContent = calculateScore(answers);
+  renderJudgePanelInfo();
 
   MISSIONS.forEach((m) => {
     let total = 0;
@@ -285,8 +301,8 @@ async function saveResult() {
 $('saveBtn').addEventListener('click', saveResult);
 $('newBtn').addEventListener('click', resetForm);
 $('clearBtn').addEventListener('click', resetForm);
-$('teamSelect').addEventListener('change', () => scheduleLiveUpdate('editing'));
-$('roundSelect').addEventListener('change', () => scheduleLiveUpdate('editing'));
+$('teamSelect').addEventListener('change', () => { renderJudgePanelInfo(); scheduleLiveUpdate('editing'); });
+$('roundSelect').addEventListener('change', () => { renderJudgePanelInfo(); scheduleLiveUpdate('editing'); });
 $('judgeInput').addEventListener('input', () => scheduleLiveUpdate('editing'));
 
 $('judgeStartTimer')?.addEventListener('click', startRoundTimer);
@@ -314,6 +330,7 @@ onSnapshot(doc(db, 'timer', 'current'), (snap) => {
 
 await loadTeams();
 renderMissions();
+renderJudgePanelInfo();
 updateTotals();
 isReadyForLive = true;
 startLocalTimerRender();

@@ -278,12 +278,159 @@ a{color:inherit}
 .round-timer strong.finished{
   color:#ff5959;
 }
-.judge-timer-card,
-.timer-card,
-.round-timer-card {
-  position: sticky;
-  top: 95px;
-  z-index: 30;
-  box-shadow: 0 18px 45px rgba(0,0,0,.35);
-  border: 3px solid #ffd53b;
+
+/* =========================================================
+   PAINEL FIXO DO JUIZ: CRONÔMETRO + PONTUAÇÃO TOTAL
+   ========================================================= */
+.judge-control-panel{
+  position:sticky;
+  top:95px;
+  z-index:30;
+  text-align:center;
+  border:4px solid var(--yellow);
+  box-shadow:0 22px 55px rgba(0,0,0,.24);
+  background:linear-gradient(180deg,#fffdf4,#f5f9ed);
+}
+.judge-control-panel:after{
+  content:"";
+  position:absolute;
+  inset:auto -30px -60px auto;
+  width:170px;
+  height:170px;
+  background:radial-gradient(circle,rgba(255,213,59,.22),transparent 65%);
+  pointer-events:none;
+}
+.judge-context{
+  position:relative;
+  z-index:1;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,var(--green-dark),var(--green));
+  color:#fff;
+  box-shadow:0 12px 28px rgba(13,93,55,.22);
+}
+.judge-context span{
+  display:block;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:#dff7d6;
+}
+.judge-context strong{
+  display:block;
+  margin:8px 0 4px;
+  font-size:clamp(22px,2vw,30px);
+  line-height:1;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.judge-context small{
+  display:inline-flex;
+  border-radius:999px;
+  padding:7px 12px;
+  background:#ffd53b;
+  color:#162217;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.judge-timer-area{
+  position:relative;
+  z-index:1;
+  padding-bottom:18px;
+  margin-bottom:18px;
+  border-bottom:2px dashed var(--line);
+}
+.judge-timer-area h3,
+.judge-score-area h3{
+  margin:0 0 10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--green-dark);
+  font-size:17px;
+}
+.judge-timer-display{
+  font-size:clamp(64px,5.5vw,92px);
+  font-weight:1000;
+  line-height:.95;
+  color:var(--green-dark);
+  text-shadow:2px 4px 0 rgba(255,213,59,.55);
+  font-variant-numeric:tabular-nums;
+  margin:8px 0 8px;
+}
+.judge-timer-display.danger{
+  color:#f4a000;
+  text-shadow:0 0 24px rgba(255,213,59,.35);
+  animation:pulseText .8s infinite;
+}
+.judge-timer-display.critical,
+.judge-timer-display.finished{
+  color:#e53935;
+  text-shadow:0 0 24px rgba(229,57,53,.35);
+  animation:pulseText .55s infinite;
+}
+.judge-timer-status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:8px 14px;
+  margin:8px 0 14px;
+  font-size:12px;
+  font-weight:1000;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+.judge-timer-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:8px;
+}
+.judge-timer-actions .btn,
+.full-btn{
+  width:100%;
+  min-height:48px;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.judge-score-area{
+  position:relative;
+  z-index:1;
+}
+.judge-score{
+  font-size:clamp(92px,7vw,132px);
+  font-weight:1000;
+  color:var(--green-dark);
+  line-height:.82;
+  margin:8px 0 4px;
+  text-shadow:
+    3px 5px 0 rgba(255,213,59,.62),
+    0 0 30px rgba(36,139,85,.18);
+}
+.judge-score-area > strong{
+  display:block;
+  color:var(--red);
+  font-size:20px;
+  letter-spacing:2px;
+  font-weight:1000;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.judge-score-area .muted{
+  margin:8px 0 16px;
+  font-size:13px;
+}
+@media(max-width:900px){
+  .judge-control-panel{
+    top:86px;
+  }
+  .judge-timer-actions{
+    grid-template-columns:1fr 1fr;
+  }
+  .judge-timer-actions .btn:first-child{
+    grid-column:1 / -1;
+  }
 }
