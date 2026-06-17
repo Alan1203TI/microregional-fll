@@ -162,3 +162,119 @@ a{color:inherit}
   .side-panels{grid-template-rows:auto}
   .live-score-card{min-height:auto}
 }
+
+
+/* =========================================================
+   CRONÔMETRO CONTROLADO PELA TELA DE PONTUAÇÃO
+   ========================================================= */
+.judge-timer-card{
+  text-align:center;
+  border-color:var(--yellow);
+}
+.judge-timer-card h3{
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--green-dark);
+}
+.judge-timer-display{
+  font-size:58px;
+  font-weight:1000;
+  line-height:1;
+  color:var(--green-dark);
+  text-shadow:2px 3px 0 rgba(255,213,59,.45);
+  font-variant-numeric:tabular-nums;
+  margin:12px 0 6px;
+}
+.judge-timer-display.danger{
+  color:#e53935;
+  animation:pulseText .7s infinite;
+}
+.judge-timer-display.finished{
+  color:#e53935;
+}
+.judge-timer-status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:7px 12px;
+  margin:8px 0 14px;
+  font-size:12px;
+  font-weight:1000;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+.judge-timer-status.paused{
+  background:#eef5e6;
+  color:var(--green-dark);
+  border:2px solid var(--line);
+}
+.judge-timer-status.running{
+  background:#d9ffe7;
+  color:#0d5d37;
+  border:2px solid #7cffaa;
+  box-shadow:0 0 18px rgba(124,255,170,.28);
+}
+.judge-timer-status.finished{
+  background:#ffe1e1;
+  color:#b40000;
+  border:2px solid #ff9b9b;
+}
+.judge-timer-actions{
+  display:grid;
+  gap:9px;
+  margin-top:8px;
+}
+.judge-timer-actions .btn{
+  width:100%;
+}
+
+/* Destaque maior para marcação ao vivo no dashboard */
+.side-panels{
+  grid-template-rows: 1.8fr 1fr 1fr;
+}
+.live-score-card{
+  min-height:360px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.live-score-card > span{
+  font-size:26px;
+  color:#9dffbd;
+  font-weight:1000;
+  letter-spacing:2px;
+}
+.live-team-name{
+  font-size:clamp(34px,2.8vw,58px);
+  font-weight:1000;
+  text-transform:uppercase;
+  margin-top:18px;
+}
+.live-score-number{
+  font-size:clamp(130px,9vw,190px);
+  font-weight:1000;
+  line-height:.78;
+  color:#7CFFAA;
+  text-shadow:
+    0 0 18px rgba(124,255,170,.4),
+    0 0 45px rgba(124,255,170,.25);
+  font-variant-numeric:tabular-nums;
+  margin-top:18px;
+}
+.live-score-label{
+  font-size:clamp(28px,2.4vw,44px);
+  color:#fff;
+  font-weight:1000;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin:8px 0 10px;
+}
+.live-progress{
+  height:22px;
+  border-radius:999px;
+  margin-top:18px;
+}
+.round-timer strong.finished{
+  color:#ff5959;
+}

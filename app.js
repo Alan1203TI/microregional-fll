@@ -6,11 +6,14 @@ import {
   doc,
   setDoc,
   getDocs,
+  onSnapshot,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
+const ROUND_DURATION = 150;
 const answers = {};
 const $ = (id) => document.getElementById(id);
+
 const toast = (msg) => {
   const t = $('toast');
   t.textContent = msg;
@@ -20,6 +23,113 @@ const toast = (msg) => {
 
 let liveTimer = null;
 let isReadyForLive = false;
+
+let timerState = {
+  seconds: ROUND_DURATION,
+  running: false,
+  targetEndAt: null
+};
+let timerRenderInterval = null;
+
+function clampSeconds(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return ROUND_DURATION;
+  return Math.max(0, Math.min(ROUND_DURATION, Math.round(n)));
+}
+
+function getRemainingSeconds(state = timerState) {
+  if (!state.running || !state.targetEndAt) {
+    return clampSeconds(state.seconds);
+  }
+
+  const remaining = Math.ceil((Number(state.targetEndAt) - Date.now()) / 1000);
+  return clampSeconds(remaining);
+}
+
+function formatSeconds(seconds) {
+  const safe = clampSeconds(seconds);
+  const m = String(Math.floor(safe / 60)).padStart(2, '0');
+  const s = String(safe % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function renderJudgeTimer() {
+  const display = $('judgeTimerDisplay');
+  const status = $('judgeTimerStatus');
+  if (!display || !status) return;
+
+  const remaining = getRemainingSeconds();
+  display.textContent = formatSeconds(remaining);
+  display.classList.toggle('danger', remaining <= 30 && remaining > 0);
+  display.classList.toggle('finished', remaining === 0);
+
+  if (remaining === 0) {
+    status.textContent = 'Tempo encerrado';
+    status.className = 'judge-timer-status finished';
+  } else if (timerState.running) {
+    status.textContent = 'Em andamento';
+    status.className = 'judge-timer-status running';
+  } else {
+    status.textContent = 'Parado';
+    status.className = 'judge-timer-status paused';
+  }
+}
+
+function startLocalTimerRender() {
+  clearInterval(timerRenderInterval);
+  timerRenderInterval = setInterval(renderJudgeTimer, 250);
+  renderJudgeTimer();
+}
+
+async function publishTimerState(nextState) {
+  timerState = {
+    ...timerState,
+    ...nextState
+  };
+
+  renderJudgeTimer();
+
+  await setDoc(doc(db, 'timer', 'current'), {
+    ...timerState,
+    updatedAt: serverTimestamp(),
+    updatedAtLocal: new Date().toISOString()
+  }, { merge: true });
+}
+
+async function startRoundTimer() {
+  const remaining = getRemainingSeconds();
+  const secondsToUse = remaining > 0 ? remaining : ROUND_DURATION;
+
+  await publishTimerState({
+    seconds: secondsToUse,
+    running: true,
+    targetEndAt: Date.now() + (secondsToUse * 1000)
+  });
+
+  toast('Cronômetro iniciado no dashboard.');
+}
+
+async function pauseRoundTimer() {
+  const remaining = getRemainingSeconds();
+
+  await publishTimerState({
+    seconds: remaining,
+    running: false,
+    targetEndAt: null
+  });
+
+  toast('Cronômetro pausado.');
+}
+
+async function resetRoundTimer() {
+  await publishTimerState({
+    seconds: ROUND_DURATION,
+    running: false,
+    targetEndAt: null
+  });
+
+  toast('Cronômetro reiniciado para 02:30.');
+}
 
 async function loadTeams() {
   const select = $('teamSelect');
@@ -179,8 +289,32 @@ $('teamSelect').addEventListener('change', () => scheduleLiveUpdate('editing'));
 $('roundSelect').addEventListener('change', () => scheduleLiveUpdate('editing'));
 $('judgeInput').addEventListener('input', () => scheduleLiveUpdate('editing'));
 
+$('judgeStartTimer')?.addEventListener('click', startRoundTimer);
+$('judgePauseTimer')?.addEventListener('click', pauseRoundTimer);
+$('judgeResetTimer')?.addEventListener('click', resetRoundTimer);
+
+onSnapshot(doc(db, 'timer', 'current'), (snap) => {
+  if (snap.exists()) {
+    const data = snap.data();
+    timerState = {
+      seconds: clampSeconds(data.seconds),
+      running: !!data.running,
+      targetEndAt: data.targetEndAt || null
+    };
+  } else {
+    timerState = {
+      seconds: ROUND_DURATION,
+      running: false,
+      targetEndAt: null
+    };
+  }
+
+  renderJudgeTimer();
+});
+
 await loadTeams();
 renderMissions();
 updateTotals();
 isReadyForLive = true;
+startLocalTimerRender();
 await updateLiveScore('editing');

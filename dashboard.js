@@ -3,8 +3,12 @@ import {
   collection,
   doc,
   onSnapshot,
-  query
+  query,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const ROUND_DURATION = 150;
 
 const rankingEl = document.getElementById('ranking');
 const roundsBody = document.getElementById('roundsBody');
@@ -15,6 +19,13 @@ const timerDisplay = document.getElementById('timerDisplay');
 const startTimer = document.getElementById('startTimer');
 const pauseTimer = document.getElementById('pauseTimer');
 const resetTimer = document.getElementById('resetTimer');
+
+let timerState = {
+  seconds: ROUND_DURATION,
+  running: false,
+  targetEndAt: null
+};
+let timerRenderInterval = null;
 
 function fmtDate(iso) {
   try {
@@ -32,41 +43,110 @@ function fmtTime(iso) {
   }
 }
 
-let timeLeft = 150;
-let timerId = null;
-
-function renderTimer() {
-  const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-  const s = String(timeLeft % 60).padStart(2, '0');
-  timerDisplay.textContent = `${m}:${s}`;
-  timerDisplay.classList.toggle('danger', timeLeft <= 30);
+function clampSeconds(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return ROUND_DURATION;
+  return Math.max(0, Math.min(ROUND_DURATION, Math.round(n)));
 }
 
-startTimer.onclick = () => {
-  if (timerId) return;
-  timerId = setInterval(() => {
-    if (timeLeft > 0) timeLeft--;
-    renderTimer();
-    if (timeLeft === 0) {
-      clearInterval(timerId);
-      timerId = null;
-    }
-  }, 1000);
-};
+function getRemainingSeconds(state = timerState) {
+  if (!state.running || !state.targetEndAt) {
+    return clampSeconds(state.seconds);
+  }
 
-pauseTimer.onclick = () => {
-  clearInterval(timerId);
-  timerId = null;
-};
+  const remaining = Math.ceil((Number(state.targetEndAt) - Date.now()) / 1000);
+  return clampSeconds(remaining);
+}
 
-resetTimer.onclick = () => {
-  clearInterval(timerId);
-  timerId = null;
-  timeLeft = 150;
+function formatSeconds(seconds) {
+  const safe = clampSeconds(seconds);
+  const m = String(Math.floor(safe / 60)).padStart(2, '0');
+  const s = String(safe % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function renderTimer() {
+  const remaining = getRemainingSeconds();
+  timerDisplay.textContent = formatSeconds(remaining);
+  timerDisplay.classList.toggle('danger', remaining <= 30 && remaining > 0);
+  timerDisplay.classList.toggle('finished', remaining === 0);
+}
+
+function startLocalTimerRender() {
+  clearInterval(timerRenderInterval);
+  timerRenderInterval = setInterval(renderTimer, 250);
   renderTimer();
-};
+}
 
-renderTimer();
+async function publishTimerState(nextState) {
+  timerState = {
+    ...timerState,
+    ...nextState
+  };
+
+  renderTimer();
+
+  await setDoc(doc(db, 'timer', 'current'), {
+    ...timerState,
+    updatedAt: serverTimestamp(),
+    updatedAtLocal: new Date().toISOString()
+  }, { merge: true });
+}
+
+async function startRoundTimer() {
+  const remaining = getRemainingSeconds();
+  const secondsToUse = remaining > 0 ? remaining : ROUND_DURATION;
+
+  await publishTimerState({
+    seconds: secondsToUse,
+    running: true,
+    targetEndAt: Date.now() + (secondsToUse * 1000)
+  });
+}
+
+async function pauseRoundTimer() {
+  const remaining = getRemainingSeconds();
+
+  await publishTimerState({
+    seconds: remaining,
+    running: false,
+    targetEndAt: null
+  });
+}
+
+async function resetRoundTimer() {
+  await publishTimerState({
+    seconds: ROUND_DURATION,
+    running: false,
+    targetEndAt: null
+  });
+}
+
+startTimer.onclick = startRoundTimer;
+pauseTimer.onclick = pauseRoundTimer;
+resetTimer.onclick = resetRoundTimer;
+
+onSnapshot(doc(db, 'timer', 'current'), (snap) => {
+  if (snap.exists()) {
+    const data = snap.data();
+
+    timerState = {
+      seconds: clampSeconds(data.seconds),
+      running: !!data.running,
+      targetEndAt: data.targetEndAt || null
+    };
+  } else {
+    timerState = {
+      seconds: ROUND_DURATION,
+      running: false,
+      targetEndAt: null
+    };
+  }
+
+  renderTimer();
+});
+
+startLocalTimerRender();
 
 onSnapshot(doc(db, 'liveScores', 'current'), (snap) => {
   if (!snap.exists()) {
@@ -81,7 +161,8 @@ onSnapshot(doc(db, 'liveScores', 'current'), (snap) => {
 
   liveScoreBox.innerHTML = `
     <div class="live-team-name">${live.teamName || 'Equipe não selecionada'}</div>
-    <div class="live-score-number">${live.score || 0}<span>PONTOS</span></div>
+    <div class="live-score-number">${live.score || 0}</div>
+    <div class="live-score-label">PONTOS</div>
     <div class="live-meta">
       <strong>${roundLabel}</strong>
       <span>${statusLabel}</span>
