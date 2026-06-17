@@ -1,0 +1,93 @@
+SISTEMA DE PONTUAÇÃO - MICRORREGIONAL FLL 2026
+VERSÃO ESTILO CANECAS DEL REI / GITHUB + FIREBASE
+
+ESTRUTURA DO PROJETO
+
+Agora os arquivos principais ficam direto na raiz do repositório, igual ao projeto Canecas del Rei:
+
+index.html              -> Tela dos árbitros
+admin.html              -> Painel administrativo
+equipes.html            -> Cadastro de equipes
+dashboard.html          -> Dashboard da TV/projetor
+style.css               -> Visual profissional estilo campeonato
+app.js                  -> Lançamento da pontuação
+admin.js                -> Administração
+shared.js               -> se existir em versões futuras
+firebase-config.js      -> Configuração do Firebase
+firebase-init.js        -> Inicialização do Firebase
+missoes.js              -> Missões e pontuações
+rules.js                -> Regras de cálculo
+firebase.json           -> Configuração do Firebase Hosting
+.firebaserc             -> Projeto Firebase padrão
+assets/                 -> Imagens e elementos visuais
+
+CONFIGURAÇÃO DO FIREBASE
+
+O arquivo firebase-config.js já está usando o projeto:
+
+microregional-fll
+
+COMO SUBIR NO GITHUB
+
+1. Entre no seu repositório no GitHub.
+2. Apague a pasta public antiga, se ela existir.
+3. Envie todos os arquivos desta pasta diretamente para a raiz do repositório.
+4. O index.html precisa aparecer na primeira tela do repositório, junto com firebase.json.
+
+PUBLICAÇÃO IGUAL AO CANECAS DEL REI
+
+Use o Firebase Hosting conectado ao GitHub:
+
+1. Acesse o Firebase Console.
+2. Entre no projeto microregional-fll.
+3. Vá em Hosting.
+4. Clique em Começar ou Adicionar outro site, se necessário.
+5. Escolha integração com GitHub.
+6. Conecte o repositório do GitHub.
+7. Escolha a branch main.
+8. Quando perguntar a pasta pública, use:
+
+.
+
+Isso significa raiz do projeto.
+
+9. Finalize a configuração.
+
+Depois disso, toda vez que você enviar alteração para o GitHub, o Firebase publica automaticamente.
+
+REGRAS DO FIRESTORE PARA TESTE
+
+Use estas regras no começo:
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+
+Depois, quando tudo estiver pronto, trocamos para regras com login.
+
+TELAS DO SISTEMA
+
+Tela dos árbitros:
+/index.html
+
+Cadastro de equipes:
+/equipes.html
+
+Painel admin:
+/admin.html
+
+Dashboard para TV:
+/dashboard.html
+
+REGRA DO RANKING
+
+Round TESTE aparece no histórico, mas não vale para ranking final.
+Round 1 e Round 2 valem.
+Ranking final usa a maior nota entre Round 1 e Round 2.
+
