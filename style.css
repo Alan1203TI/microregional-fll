@@ -278,11 +278,12 @@ a{color:inherit}
 .round-timer strong.finished{
   color:#ff5959;
 }
-/* Cronômetro fixo na tela de pontuação */
 .judge-timer-card,
 .timer-card,
 .round-timer-card {
   position: sticky;
   top: 95px;
   z-index: 30;
+  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+  border: 3px solid #ffd53b;
 }
