@@ -81,7 +81,7 @@ onSnapshot(doc(db, 'liveScores', 'current'), (snap) => {
 
   liveScoreBox.innerHTML = `
     <div class="live-team-name">${live.teamName || 'Equipe não selecionada'}</div>
-    <div class="live-score-number">${live.score || 0}<span>pts</span></div>
+    <div class="live-score-number">${live.score || 0}<span>PONTOS</span></div>
     <div class="live-meta">
       <strong>${roundLabel}</strong>
       <span>${statusLabel}</span>
