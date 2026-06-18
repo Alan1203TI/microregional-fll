@@ -1554,3 +1554,348 @@ body{
 .dashboard-lots .vivid-ranking{
   height:calc(100% - 46px)!important;
 }
+
+
+/* =========================================================
+   AJUSTES FINAIS SOLICITADOS - DASHBOARD LIMPO + PAINEL JUIZ HORIZONTAL
+   ========================================================= */
+
+/* Dashboard: manter tudo em uma tela, remover sensação de corte e dar mais vida */
+.championship-body.vivid-dashboard{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(255,213,59,.22), transparent 24%),
+    radial-gradient(circle at 86% 0%, rgba(124,255,170,.30), transparent 30%),
+    linear-gradient(135deg, rgba(4,72,42,.86), rgba(3,31,19,.92)),
+    var(--custom-page-bg) center center/cover fixed!important;
+}
+
+.championship-body.vivid-dashboard:before{
+  opacity:.30!important;
+  filter:saturate(1.35) contrast(1.08);
+}
+
+.scoreboard-header{
+  padding:10px 22px!important;
+}
+
+.vivid-layout{
+  height:calc(100vh - 74px)!important;
+  width:min(1880px,98vw)!important;
+  margin:10px auto 0!important;
+  display:grid!important;
+  grid-template-rows:auto 1fr!important;
+  gap:12px!important;
+  overflow:hidden!important;
+}
+
+.vivid-hero{
+  display:grid!important;
+  grid-template-columns:minmax(520px,1fr) minmax(520px,760px)!important;
+  gap:14px!important;
+  margin-bottom:0!important;
+  align-items:stretch!important;
+}
+
+.vivid-hero .hero-left{
+  padding:22px 28px!important;
+  min-height:170px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  background:
+    linear-gradient(135deg,rgba(13,93,55,.84),rgba(36,139,85,.64)),
+    rgba(255,255,255,.08)!important;
+  border-color:rgba(157,255,189,.28)!important;
+}
+
+.vivid-hero .hero-left .eyebrow{
+  color:#ffd53b!important;
+  font-size:15px!important;
+  letter-spacing:2.2px!important;
+}
+
+.vivid-hero .hero-left h1{
+  font-size:clamp(44px,4.9vw,92px)!important;
+  line-height:.90!important;
+  margin:6px 0 0!important;
+  color:#f7ffe9!important;
+  text-shadow:0 8px 34px rgba(0,0,0,.28)!important;
+}
+
+/* Cronômetros maiores, centralizados e sem cortar */
+.vivid-timers{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:14px!important;
+}
+
+.dual-timer-card{
+  min-height:170px!important;
+  padding:18px 20px!important;
+  justify-content:center!important;
+  align-items:center!important;
+  border:2px solid rgba(255,213,59,.46)!important;
+  background:
+    radial-gradient(circle at top right,rgba(255,213,59,.20),transparent 44%),
+    linear-gradient(180deg,rgba(7,75,42,.72),rgba(3,34,22,.70))!important;
+  overflow:visible!important;
+}
+
+.dual-timer-card span{
+  font-size:16px!important;
+  margin-bottom:4px!important;
+}
+
+.dual-timer-card strong{
+  font-size:clamp(70px,6.2vw,112px)!important;
+  line-height:1!important;
+  margin:4px 0 8px!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+
+.dual-timer-card em{
+  font-size:12px!important;
+  padding:8px 14px!important;
+}
+
+/* Dashboard: sem ranking geral, somente resultados */
+.integrated-scoreboard-grid,
+.vivid-scoreboard-grid,
+.integrated-ranking-panel,
+.vivid-ranking-panel,
+#ranking{
+  display:none!important;
+}
+
+.dashboard-results-only{
+  margin-top:0!important;
+  min-height:0!important;
+  height:100%!important;
+  padding:22px 24px!important;
+  border:2px solid rgba(255,213,59,.34)!important;
+  background:
+    radial-gradient(circle at 96% 0%,rgba(255,213,59,.14),transparent 30%),
+    linear-gradient(180deg,rgba(6,77,43,.78),rgba(3,45,29,.62))!important;
+  box-shadow:0 24px 78px rgba(0,0,0,.34)!important;
+  overflow:hidden!important;
+}
+
+.dashboard-results-only .panel-title{
+  margin-bottom:10px!important;
+}
+
+.dashboard-results-only .panel-title h2{
+  font-size:clamp(30px,3.2vw,58px)!important;
+  color:#ffd53b!important;
+  letter-spacing:2px!important;
+  text-shadow:0 0 22px rgba(255,213,59,.24)!important;
+}
+
+.dashboard-results-only .panel-title span{
+  font-size:16px!important;
+  color:#9dffbd!important;
+}
+
+.dashboard-results-only .table-wrap{
+  height:calc(100% - 76px)!important;
+  overflow:hidden!important;
+}
+
+.dashboard-results-only .champ-table{
+  height:100%;
+  border-spacing:0 8px!important;
+}
+
+.dashboard-results-only .champ-table th{
+  font-size:clamp(10px,1vw,14px)!important;
+  padding:0 14px 4px!important;
+}
+
+.dashboard-results-only .champ-table td{
+  padding:clamp(7px,1vh,14px) 14px!important;
+  font-size:clamp(15px,1.45vw,24px)!important;
+  background:rgba(255,255,255,.10)!important;
+}
+
+.dashboard-results-only .champ-table td:first-child strong{
+  font-size:clamp(17px,1.8vw,28px)!important;
+}
+
+.dashboard-results-only .best-badge{
+  font-size:clamp(15px,1.4vw,22px)!important;
+  padding:8px 14px!important;
+}
+
+.dashboard-many .dashboard-results-only .champ-table{
+  border-spacing:0 6px!important;
+}
+.dashboard-many .dashboard-results-only .champ-table td{
+  padding:7px 12px!important;
+  font-size:clamp(13px,1.2vw,19px)!important;
+}
+.dashboard-many .dashboard-results-only .champ-table td:first-child strong{
+  font-size:clamp(15px,1.45vw,22px)!important;
+}
+
+.dashboard-lots .dashboard-results-only .champ-table{
+  border-spacing:0 4px!important;
+}
+.dashboard-lots .dashboard-results-only .champ-table td{
+  padding:5px 10px!important;
+  font-size:clamp(12px,1vw,16px)!important;
+}
+.dashboard-lots .dashboard-results-only .best-badge{
+  font-size:14px!important;
+  padding:6px 10px!important;
+}
+
+/* Painel do juiz mais horizontal e compacto */
+@media(min-width:901px){
+  .grid{
+    grid-template-columns:minmax(0,1fr) 460px!important;
+    gap:18px!important;
+  }
+}
+
+.judge-control-horizontal{
+  position:sticky!important;
+  top:92px!important;
+  z-index:30!important;
+  padding:15px!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:12px!important;
+  border-width:3px!important;
+  border-color:#ffd53b!important;
+}
+
+.judge-control-horizontal .judge-context{
+  margin:0!important;
+  padding:12px 14px!important;
+  display:grid!important;
+  grid-template-columns:auto 1fr auto!important;
+  align-items:center!important;
+  gap:8px 12px!important;
+  text-align:left!important;
+}
+
+.judge-control-horizontal .judge-context span{
+  display:none!important;
+}
+
+.judge-control-horizontal .judge-context #currentTableDisplay{
+  margin:0!important;
+  font-size:22px!important;
+  color:#ffd53b!important;
+  white-space:nowrap!important;
+}
+
+.judge-control-horizontal .judge-context #currentTeamDisplay{
+  margin:0!important;
+  font-size:24px!important;
+  color:#fff!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+.judge-control-horizontal .judge-context #currentRoundDisplay{
+  margin:0!important;
+  white-space:nowrap!important;
+}
+
+.judge-main-row{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:12px!important;
+  align-items:stretch!important;
+}
+
+.judge-control-horizontal .judge-timer-area,
+.judge-control-horizontal .judge-score-area{
+  padding:12px!important;
+  margin:0!important;
+  border:2px solid var(--line)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.64)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:150px!important;
+}
+
+.judge-control-horizontal .judge-timer-area{
+  border-right:2px solid var(--line)!important;
+  border-bottom:2px solid var(--line)!important;
+}
+
+.judge-control-horizontal .judge-timer-area h3,
+.judge-control-horizontal .judge-score-area h3{
+  font-size:13px!important;
+  margin:0 0 7px!important;
+}
+
+.judge-control-horizontal .judge-timer-display{
+  font-size:clamp(46px,4vw,66px)!important;
+  margin:0 0 6px!important;
+  line-height:.95!important;
+}
+
+.judge-control-horizontal .judge-timer-status{
+  margin:4px auto 0!important;
+  padding:6px 10px!important;
+  font-size:10px!important;
+}
+
+.judge-control-horizontal .judge-score{
+  font-size:clamp(58px,5vw,82px)!important;
+  margin:0!important;
+  line-height:.85!important;
+}
+
+.judge-control-horizontal .judge-score-area>strong{
+  font-size:14px!important;
+  margin:6px 0 0!important;
+}
+
+.judge-control-horizontal .judge-timer-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr 1fr!important;
+  gap:9px!important;
+  margin:0!important;
+}
+
+.judge-control-horizontal .judge-timer-actions .btn,
+.judge-control-horizontal .full-btn{
+  min-height:42px!important;
+  padding:10px 12px!important;
+  font-size:12px!important;
+}
+
+.judge-control-horizontal .full-btn{
+  margin-top:0!important;
+}
+
+@media(max-width:900px){
+  .vivid-layout{
+    height:auto!important;
+    overflow:visible!important;
+  }
+  .vivid-hero{
+    grid-template-columns:1fr!important;
+  }
+  .vivid-timers{
+    grid-template-columns:1fr!important;
+  }
+  .judge-main-row{
+    grid-template-columns:1fr!important;
+  }
+  .judge-control-horizontal .judge-context{
+    grid-template-columns:1fr!important;
+    text-align:center!important;
+  }
+}

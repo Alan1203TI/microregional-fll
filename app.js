@@ -33,6 +33,7 @@ let timerState = {
   targetEndAt: null
 };
 let timerRenderInterval = null;
+let timerCloudSyncInterval = null;
 
 function clampSeconds(value) {
   const n = Number(value);
@@ -85,6 +86,36 @@ function startLocalTimerRender() {
   renderJudgeTimer();
 }
 
+function startTimerCloudSync() {
+  clearInterval(timerCloudSyncInterval);
+
+  if (!timerState.running) return;
+
+  timerCloudSyncInterval = setInterval(async () => {
+    const remaining = getRemainingSeconds();
+
+    if (!timerState.running) {
+      clearInterval(timerCloudSyncInterval);
+      return;
+    }
+
+    try {
+      await setDoc(doc(db, 'timers', TABLE_ID), {
+        ...timerState,
+        seconds: remaining,
+        updatedAt: serverTimestamp(),
+        updatedAtLocal: new Date().toISOString()
+      }, { merge: true });
+    } catch (error) {
+      console.warn('Não foi possível sincronizar o cronômetro agora:', error);
+    }
+
+    if (remaining <= 0) {
+      clearInterval(timerCloudSyncInterval);
+    }
+  }, 1000);
+}
+
 async function publishTimerState(nextState) {
   timerState = {
     ...timerState,
@@ -92,6 +123,7 @@ async function publishTimerState(nextState) {
   };
 
   renderJudgeTimer();
+  startTimerCloudSync();
 
   await setDoc(doc(db, 'timers', TABLE_ID), {
     ...timerState,
@@ -338,6 +370,7 @@ onSnapshot(doc(db, 'timers', TABLE_ID), (snap) => {
   }
 
   renderJudgeTimer();
+  startTimerCloudSync();
 });
 
 await loadTeams();

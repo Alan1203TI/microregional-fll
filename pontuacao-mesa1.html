@@ -56,7 +56,7 @@
       </section>
 
       <aside>
-        <div class="card judge-control-panel">
+        <div class="card judge-control-panel judge-control-horizontal">
           <div class="judge-context">
             <span>Mesa atual</span>
             <strong id="currentTableDisplay">Mesa 1</strong>
@@ -65,32 +65,27 @@
             <small id="currentRoundDisplay">Round TESTE</small>
           </div>
 
-          <div class="judge-timer-area">
-            <h3>Cronômetro do Round</h3>
-            <div class="judge-timer-display" id="judgeTimerDisplay">02:30</div>
-            <div class="judge-timer-status" id="judgeTimerStatus">Parado</div>
+          <div class="judge-main-row">
+            <div class="judge-timer-area">
+              <h3>Cronômetro</h3>
+              <div class="judge-timer-display" id="judgeTimerDisplay">02:30</div>
+              <div class="judge-timer-status" id="judgeTimerStatus">Parado</div>
+            </div>
 
-            <div class="judge-timer-actions">
-              <button class="btn primary" id="judgeStartTimer">Iniciar Round</button>
-              <button class="btn" id="judgePauseTimer">Pausar</button>
-              <button class="btn red" id="judgeResetTimer">Reiniciar</button>
+            <div class="judge-score-area">
+              <h3>Pontuação</h3>
+              <div class="score judge-score"><span id="totalScore">0</span></div>
+              <strong>PONTOS</strong>
             </div>
           </div>
 
-          <div class="judge-score-area">
-            <h3>Pontuação total</h3>
-            <div class="score judge-score"><span id="totalScore">0</span></div>
-            <strong>PONTOS</strong>
-            <p class="muted">Atualiza automaticamente enquanto o juiz marca os itens.</p>
+          <div class="judge-timer-actions">
+            <button class="btn primary" id="judgeStartTimer">Iniciar</button>
+            <button class="btn" id="judgePauseTimer">Pausar</button>
+            <button class="btn red" id="judgeResetTimer">Reiniciar</button>
           </div>
 
           <button class="btn red full-btn" id="clearBtn">Limpar marcação</button>
-        </div>
-
-        <div class="card">
-          <h3>Regra do ranking</h3>
-          <p><strong>Round TESTE</strong> aparece no dashboard, mas não vale no ranking final.</p>
-          <p><strong>Ranking final</strong> usa a maior nota entre Round 1 e Round 2.</p>
         </div>
       </aside>
     </div>

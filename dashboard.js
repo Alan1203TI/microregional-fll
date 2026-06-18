@@ -27,8 +27,8 @@ const timerElements = {
 };
 
 const timerStates = {
-  mesa1: { seconds: ROUND_DURATION, running: false, targetEndAt: null },
-  mesa2: { seconds: ROUND_DURATION, running: false, targetEndAt: null }
+  mesa1: { seconds: ROUND_DURATION, running: false, targetEndAt: null, receivedAt: Date.now() },
+  mesa2: { seconds: ROUND_DURATION, running: false, targetEndAt: null, receivedAt: Date.now() }
 };
 
 function fmtDate(iso) {
@@ -48,12 +48,27 @@ function clampSeconds(value) {
 function getRemainingSeconds(tableId) {
   const state = timerStates[tableId] || timerStates.mesa1;
 
-  if (!state.running || !state.targetEndAt) {
+  if (!state.running) {
     return clampSeconds(state.seconds);
   }
 
-  const remaining = Math.ceil((Number(state.targetEndAt) - Date.now()) / 1000);
-  return clampSeconds(remaining);
+  const options = [];
+
+  if (state.targetEndAt) {
+    const byTarget = Math.ceil((Number(state.targetEndAt) - Date.now()) / 1000);
+    if (Number.isFinite(byTarget)) options.push(byTarget);
+  }
+
+  if (state.receivedAt) {
+    const elapsed = Math.floor((Date.now() - Number(state.receivedAt)) / 1000);
+    const bySnapshot = Number(state.seconds || 0) - Math.max(0, elapsed);
+    if (Number.isFinite(bySnapshot)) options.push(bySnapshot);
+  }
+
+  if (!options.length) return clampSeconds(state.seconds);
+
+  // Usa o menor valor para evitar atraso visual no dashboard.
+  return clampSeconds(Math.min(...options));
 }
 
 function formatSeconds(seconds) {
@@ -102,10 +117,11 @@ function listenTimer(tableId) {
       timerStates[tableId] = {
         seconds: clampSeconds(data.seconds),
         running: !!data.running,
-        targetEndAt: data.targetEndAt || null
+        targetEndAt: data.targetEndAt || null,
+        receivedAt: Date.now()
       };
     } else {
-      timerStates[tableId] = { seconds: ROUND_DURATION, running: false, targetEndAt: null };
+      timerStates[tableId] = { seconds: ROUND_DURATION, running: false, targetEndAt: null, receivedAt: Date.now() };
     }
 
     renderTimer(tableId);
@@ -182,7 +198,7 @@ function renderRoundsTable(ranking) {
 
   roundsBody.innerHTML = ranking
     .slice()
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => Number(b.publicScore || 0) - Number(a.publicScore || 0) || a.name.localeCompare(b.name))
     .map((team) => {
       const testeTable = bestVisibleTableLabel(team.TESTE);
       const r1Table = bestVisibleTableLabel(team['1']);
