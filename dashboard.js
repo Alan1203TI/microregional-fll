@@ -128,9 +128,9 @@ function buildRanking(results) {
         TESTE: null,
         '1': null,
         '2': null,
-        best: 0,
-        bestRound: '-',
-        bestTable: '',
+        publicScore: 0,
+        publicRound: '-',
+        publicTable: '',
         updated: r.createdAtLocal || ''
       };
     }
@@ -147,20 +147,12 @@ function buildRanking(results) {
 
   Object.values(byTeam).forEach((team) => {
     const r1 = Number(team['1']?.score || 0);
-    const r2 = Number(team['2']?.score || 0);
-
-    if (r2 > r1) {
-      team.best = r2;
-      team.bestRound = 'Round 2';
-      team.bestTable = team['2']?.tableName || '';
-    } else {
-      team.best = r1;
-      team.bestRound = r1 ? 'Round 1' : '-';
-      team.bestTable = team['1']?.tableName || '';
-    }
+    team.publicScore = r1;
+    team.publicRound = r1 ? 'Round 1' : '-';
+    team.publicTable = team['1']?.tableName || '';
   });
 
-  return Object.values(byTeam).sort((a, b) => b.best - a.best || a.name.localeCompare(b.name));
+  return Object.values(byTeam).sort((a, b) => b.publicScore - a.publicScore || a.name.localeCompare(b.name));
 }
 
 function renderRanking(ranking) {
@@ -170,19 +162,19 @@ function renderRanking(ranking) {
 
   rankingEl.innerHTML = ranking.length ? ranking.map((team, index) => {
     const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}º`;
-    const width = Math.max(5, Math.min(100, (Number(team.best || 0) / 470) * 100));
-    const bestTable = team.bestTable ? ` • ${team.bestTable}` : '';
+    const width = Math.max(5, Math.min(100, (Number(team.publicScore || 0) / 470) * 100));
+    const tableLabel = team.publicTable ? ` • ${team.publicTable}` : '';
 
     return `<div class="champ-rank-row rank-${index + 1}">
       <div class="champ-pos">${medal}</div>
       <div class="champ-team">
         <strong>${team.name}</strong>
-        <small>Melhor oficial: ${team.bestRound}${bestTable} • Round 2 reservado no telão</small>
+        <small>Pontuação pública: ${team.publicRound}${tableLabel}</small>
         <div class="score-bar"><i style="width:${width}%"></i></div>
       </div>
-      <div class="champ-points"><strong>${team.best}</strong><span>pts</span></div>
+      <div class="champ-points"><strong>${team.publicScore}</strong><span>pts</span></div>
     </div>`;
-  }).join('') : '<p class="empty-state">Aguardando resultados salvos...</p>';
+  }).join('') : '<p class="empty-state">Aguardando resultados do Round 1...</p>';
 }
 
 function renderRoundsTable(ranking) {
@@ -199,8 +191,7 @@ function renderRoundsTable(ranking) {
         <td><strong>${team.name}</strong></td>
         <td>${team.TESTE?.score ?? '-'}${testeTable ? `<small>${testeTable.replace(' • ', '')}</small>` : ''}</td>
         <td>${team['1']?.score ?? '-'}${r1Table ? `<small>${r1Table.replace(' • ', '')}</small>` : ''}</td>
-        <td><span class="reserved-badge">Reservado</span></td>
-        <td><span class="best-badge">${team.best} pts</span></td>
+        <td><span class="best-badge">${team.publicScore} pts</span></td>
       </tr>`;
     }).join('');
 }

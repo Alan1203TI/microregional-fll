@@ -1429,41 +1429,128 @@ body{
 }
 
 /* =========================================================
-   SOMATÓRIA PRIVADA NO ADMIN PARA ANÚNCIO DO CAMPEÃO
+   AJUSTES FINAIS DO DASHBOARD PÚBLICO
+   - evita sobreposição do título com o ranking
+   - dashboard público usa somente Round 1
+   - Round 2 fica apenas no Admin
    ========================================================= */
-.admin-champion-card{
-  border-color:#ffd53b;
-  background:linear-gradient(180deg,rgba(255,253,244,.99),rgba(255,248,214,.98));
+.championship-body.vivid-dashboard{
+  overflow:hidden!important;
 }
-.admin-champion-card h2{
-  color:var(--green-dark);
-  text-transform:uppercase;
-  letter-spacing:.8px;
+.vivid-layout{
+  height:calc(100vh - 74px)!important;
+  grid-template-rows:minmax(160px,19vh) minmax(0,1fr) minmax(120px,21vh)!important;
+  gap:14px!important;
+  padding-bottom:12px;
 }
-.champion-sum-table th:last-child,
-.champion-sum-table td:last-child{
-  text-align:right;
+.vivid-hero{
+  min-height:160px!important;
+  align-items:stretch!important;
+  overflow:visible!important;
+  position:relative;
+  z-index:2;
 }
-.champion-total-badge{
-  font-size:18px;
-  background:#ffd53b;
-  color:#03140d;
-  border-color:#e9bd22;
+.vivid-hero .hero-left{
+  padding:26px 28px!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:160px;
+  overflow:hidden;
 }
-.champion-sum-row.champion-pos-1 td{
-  background:#fff7cb;
-  border-top:2px solid #ffd53b;
-  border-bottom:2px solid #ffd53b;
+.vivid-hero .hero-left h1{
+  font-size:clamp(42px,4.8vw,82px)!important;
+  line-height:.88!important;
+  margin:4px 0 0!important;
+  max-width:100%;
 }
-.champion-sum-row.champion-pos-1 td:first-child{
-  border-left:2px solid #ffd53b;
+.vivid-hero .eyebrow{
+  font-size:clamp(12px,1.1vw,18px)!important;
+  margin-bottom:8px!important;
 }
-.champion-sum-row.champion-pos-1 td:last-child{
-  border-right:2px solid #ffd53b;
+.vivid-timers{
+  min-height:160px!important;
 }
-.champion-sum-row.champion-pos-2 td{
-  background:#f5f7f7;
+.vivid-timers .dual-timer-card{
+  min-height:160px!important;
+  padding:16px 14px!important;
 }
-.champion-sum-row.champion-pos-3 td{
-  background:#fff0df;
+.vivid-timers .dual-timer-card strong{
+  font-size:clamp(72px,6.3vw,122px)!important;
+  margin:10px 0!important;
+}
+.vivid-scoreboard-grid{
+  min-height:0!important;
+  margin-top:0!important;
+  position:relative;
+  z-index:1;
+}
+.vivid-ranking-panel{
+  min-height:0!important;
+  height:100%!important;
+}
+.vivid-panel-title{
+  margin-bottom:12px!important;
+}
+.vivid-panel-title h2{
+  font-size:clamp(36px,4.1vw,72px)!important;
+  line-height:1!important;
+}
+.vivid-ranking{
+  height:calc(100% - 82px)!important;
+  overflow:hidden!important;
+}
+.vivid-ranking .champ-team small::after{
+  content:"";
+}
+.vivid-rounds{
+  max-height:100%!important;
+}
+.vivid-rounds .champ-table th:nth-child(4),
+.vivid-rounds .champ-table td:nth-child(4){
+  text-align:left;
+}
+.dashboard-many .vivid-layout{
+  grid-template-rows:minmax(135px,17vh) minmax(0,1fr) minmax(100px,19vh)!important;
+  gap:10px!important;
+}
+.dashboard-many .vivid-hero,
+.dashboard-many .vivid-hero .hero-left,
+.dashboard-many .vivid-timers,
+.dashboard-many .vivid-timers .dual-timer-card{
+  min-height:135px!important;
+}
+.dashboard-many .vivid-hero .hero-left h1{
+  font-size:clamp(34px,4.2vw,62px)!important;
+}
+.dashboard-many .vivid-timers .dual-timer-card strong{
+  font-size:clamp(58px,5.4vw,86px)!important;
+}
+.dashboard-many .vivid-panel-title h2{
+  font-size:clamp(30px,3.5vw,52px)!important;
+}
+.dashboard-many .vivid-ranking{
+  height:calc(100% - 58px)!important;
+}
+.dashboard-lots .vivid-layout{
+  grid-template-rows:minmax(112px,15vh) minmax(0,1fr) minmax(88px,17vh)!important;
+  gap:8px!important;
+}
+.dashboard-lots .vivid-hero,
+.dashboard-lots .vivid-hero .hero-left,
+.dashboard-lots .vivid-timers,
+.dashboard-lots .vivid-timers .dual-timer-card{
+  min-height:112px!important;
+}
+.dashboard-lots .vivid-hero .hero-left h1{
+  font-size:clamp(28px,3.6vw,48px)!important;
+}
+.dashboard-lots .vivid-timers .dual-timer-card strong{
+  font-size:clamp(44px,4.8vw,70px)!important;
+}
+.dashboard-lots .vivid-panel-title h2{
+  font-size:clamp(24px,3vw,42px)!important;
+}
+.dashboard-lots .vivid-ranking{
+  height:calc(100% - 46px)!important;
 }
