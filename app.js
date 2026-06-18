@@ -14,6 +14,9 @@ const ROUND_DURATION = 150;
 const answers = {};
 const $ = (id) => document.getElementById(id);
 
+const TABLE_ID = document.body.dataset.tableId || 'mesa1';
+const TABLE_NAME = document.body.dataset.tableName || 'Mesa 1';
+
 const toast = (msg) => {
   const t = $('toast');
   t.textContent = msg;
@@ -90,7 +93,7 @@ async function publishTimerState(nextState) {
 
   renderJudgeTimer();
 
-  await setDoc(doc(db, 'timer', 'current'), {
+  await setDoc(doc(db, 'timers', TABLE_ID), {
     ...timerState,
     updatedAt: serverTimestamp(),
     updatedAtLocal: new Date().toISOString()
@@ -107,7 +110,7 @@ async function startRoundTimer() {
     targetEndAt: Date.now() + (secondsToUse * 1000)
   });
 
-  toast('Cronômetro iniciado no dashboard.');
+  toast(`Cronômetro iniciado na ${TABLE_NAME}.`);
 }
 
 async function pauseRoundTimer() {
@@ -168,9 +171,14 @@ function getSelectedTeamName() {
 function renderJudgePanelInfo() {
   const teamDisplay = $('currentTeamDisplay');
   const roundDisplay = $('currentRoundDisplay');
+  const tableDisplay = $('currentTableDisplay');
 
   if (teamDisplay) {
     teamDisplay.textContent = getSelectedTeamName() || 'Selecione uma equipe';
+  }
+
+  if (tableDisplay) {
+    tableDisplay.textContent = TABLE_NAME;
   }
 
   if (roundDisplay) {
@@ -183,6 +191,8 @@ function getLivePayload(status = 'editing') {
   const teamSelect = $('teamSelect');
 
   return {
+    tableId: TABLE_ID,
+    tableName: TABLE_NAME,
     teamId: teamSelect.value,
     teamName: getSelectedTeamName(),
     round: $('roundSelect').value,
@@ -202,7 +212,7 @@ async function updateLiveScore(status = 'editing') {
   if (!teamSelect.value) return;
 
   try {
-    await setDoc(doc(db, 'liveScores', 'current'), getLivePayload(status), { merge: true });
+    await setDoc(doc(db, 'liveScores', TABLE_ID), getLivePayload(status), { merge: true });
   } catch (error) {
     console.error('Erro ao atualizar pontuação ao vivo:', error);
   }
@@ -283,6 +293,8 @@ async function saveResult() {
   if (!teamSelect.value) return toast('Cadastre ou selecione uma equipe.');
 
   const result = {
+    tableId: TABLE_ID,
+    tableName: TABLE_NAME,
     teamId: teamSelect.value,
     teamName: getSelectedTeamName(),
     round: $('roundSelect').value,
@@ -309,7 +321,7 @@ $('judgeStartTimer')?.addEventListener('click', startRoundTimer);
 $('judgePauseTimer')?.addEventListener('click', pauseRoundTimer);
 $('judgeResetTimer')?.addEventListener('click', resetRoundTimer);
 
-onSnapshot(doc(db, 'timer', 'current'), (snap) => {
+onSnapshot(doc(db, 'timers', TABLE_ID), (snap) => {
   if (snap.exists()) {
     const data = snap.data();
     timerState = {
