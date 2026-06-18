@@ -1899,3 +1899,50 @@ body{
     text-align:center!important;
   }
 }
+
+
+/* =========================================================
+   CORREÇÃO GARANTIDA - PAINEL HORIZONTAL NAS DUAS MESAS
+   ========================================================= */
+body[data-table-id="mesa1"] .grid,
+body[data-table-id="mesa2"] .grid{
+  grid-template-columns:minmax(0,1fr) 460px!important;
+  gap:18px!important;
+}
+body[data-table-id="mesa1"] .judge-control-horizontal,
+body[data-table-id="mesa2"] .judge-control-horizontal{
+  position:sticky!important;
+  top:92px!important;
+  padding:15px!important;
+  display:grid!important;
+  gap:12px!important;
+}
+body[data-table-id="mesa1"] .judge-main-row,
+body[data-table-id="mesa2"] .judge-main-row{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:12px!important;
+}
+body[data-table-id="mesa1"] .judge-timer-area,
+body[data-table-id="mesa1"] .judge-score-area,
+body[data-table-id="mesa2"] .judge-timer-area,
+body[data-table-id="mesa2"] .judge-score-area{
+  min-height:150px!important;
+  padding:12px!important;
+  margin:0!important;
+  border:2px solid var(--line)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.64)!important;
+}
+body[data-table-id="mesa1"] .judge-timer-actions,
+body[data-table-id="mesa2"] .judge-timer-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr 1fr!important;
+  gap:9px!important;
+}
+@media(max-width:900px){
+  body[data-table-id="mesa1"] .grid,
+  body[data-table-id="mesa2"] .grid{grid-template-columns:1fr!important}
+  body[data-table-id="mesa1"] .judge-main-row,
+  body[data-table-id="mesa2"] .judge-main-row{grid-template-columns:1fr!important}
+}
