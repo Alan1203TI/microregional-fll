@@ -161,6 +161,50 @@ function renderAdminRanking() {
   }).join('') : '<tr><td colspan="6">Aguardando resultados.</td></tr>';
 }
 
+function buildChampionSumRanking() {
+  const byTeam = {};
+
+  allResults.forEach((r) => {
+    if (!r.teamId) return;
+
+    if (!byTeam[r.teamId]) {
+      byTeam[r.teamId] = {
+        teamId: r.teamId,
+        name: r.teamName || 'Equipe sem nome',
+        r1: null,
+        r2: null,
+        total: 0
+      };
+    }
+  });
+
+  Object.values(byTeam).forEach((team) => {
+    team.r1 = getBestByRoundForTeam(team.teamId, '1');
+    team.r2 = getBestByRoundForTeam(team.teamId, '2');
+    team.total = Number(team.r1?.score || 0) + Number(team.r2?.score || 0);
+  });
+
+  return Object.values(byTeam).sort((a, b) => Number(b.total || 0) - Number(a.total || 0) || a.name.localeCompare(b.name));
+}
+
+function renderChampionSumRanking() {
+  const body = $('championSumBody');
+  if (!body) return;
+
+  const ranking = buildChampionSumRanking();
+
+  body.innerHTML = ranking.length ? ranking.map((team, index) => {
+    const medal = index === 0 ? '🥇 ' : index === 1 ? '🥈 ' : index === 2 ? '🥉 ' : '';
+    return `<tr class="champion-sum-row champion-pos-${index + 1}">
+      <td><strong>${medal}${index + 1}º</strong></td>
+      <td><strong>${team.name}</strong></td>
+      <td>${resultCell(team.r1)}</td>
+      <td>${resultCell(team.r2)}</td>
+      <td><span class="best-badge champion-total-badge">${team.total} pts</span></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="5">Aguardando resultados dos rounds oficiais.</td></tr>';
+}
+
 function renderResultsTable() {
   const body = $('resultsBody');
   if (!body) return;
@@ -323,6 +367,7 @@ function initAdmin() {
 
     renderResultsTable();
     renderAdminRanking();
+    renderChampionSumRanking();
   });
 
   unsubVisual = onSnapshot(doc(db, 'settings', 'visual'), (snap) => {

@@ -891,3 +891,579 @@ body{
 .home-footer-note strong{color:#ffd53b}
 @media(max-width:980px){.home-actions-grid{grid-template-columns:repeat(2,1fr)}.home-hero-card{padding:32px 22px}.home-action-card{min-height:180px}}
 @media(max-width:560px){.home-actions-grid{grid-template-columns:1fr}.home-logo-wrap{width:96px;height:96px}.home-action-card{min-height:150px}.home-footer-note{border-radius:22px}}
+
+
+/* =========================================================
+   DASHBOARD MAIS VIVO - RANKING LIMPO E CRONÔMETROS GRANDES
+   ========================================================= */
+.vivid-dashboard{
+  color:#faffee;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(42,255,129,.42), transparent 32%),
+    radial-gradient(circle at 86% 4%, rgba(255,213,59,.34), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(22,174,190,.22), transparent 38%),
+    linear-gradient(rgba(3,30,17,.68),rgba(2,18,10,.82)),
+    var(--custom-page-bg) center center/cover fixed!important;
+}
+.vivid-dashboard:before{
+  opacity:.34!important;
+  filter:saturate(1.28) contrast(1.08);
+}
+.vivid-dashboard .arena-bg{
+  background:
+    linear-gradient(135deg,rgba(10,92,51,.20),rgba(255,213,59,.08)),
+    radial-gradient(circle at 50% 50%, transparent 45%, rgba(0,0,0,.20));
+}
+.vivid-dashboard .scoreboard-header{
+  background:linear-gradient(90deg,rgba(3,45,25,.92),rgba(10,95,53,.78));
+  border-bottom:3px solid rgba(255,213,59,.85);
+}
+.vivid-layout{
+  width:min(1880px,96vw);
+  margin-top:18px;
+}
+.vivid-hero{
+  grid-template-columns:1fr 760px;
+  align-items:stretch;
+  gap:22px;
+  margin-bottom:22px;
+}
+.vivid-hero .hero-left{
+  padding:34px 38px;
+  min-height:250px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-color:rgba(255,213,59,.35);
+  background:
+    linear-gradient(110deg,rgba(10,95,53,.72),rgba(18,138,77,.42)),
+    rgba(255,255,255,.07);
+  box-shadow:
+    0 28px 85px rgba(0,0,0,.36),
+    inset 0 0 0 1px rgba(255,255,255,.10);
+}
+.vivid-hero .hero-left h1{
+  font-size:clamp(58px,5.8vw,118px);
+  letter-spacing:-3px;
+  text-shadow:0 0 28px rgba(157,255,189,.22);
+}
+.vivid-hero .eyebrow{
+  font-size:18px;
+  color:#ffd53b;
+  text-shadow:0 0 20px rgba(255,213,59,.24);
+}
+.vivid-hero .hero-left p:last-child{
+  display:none;
+}
+.vivid-timers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+.vivid-timers .dual-timer-card{
+  min-height:250px;
+  padding:26px 20px;
+  justify-content:center;
+  border:2px solid rgba(255,213,59,.55);
+  background:
+    radial-gradient(circle at 50% 12%,rgba(255,213,59,.20),transparent 34%),
+    linear-gradient(180deg,rgba(15,91,52,.80),rgba(9,50,31,.76));
+  box-shadow:
+    0 28px 85px rgba(0,0,0,.40),
+    0 0 34px rgba(255,213,59,.10);
+}
+.vivid-timers .dual-timer-card span{
+  font-size:24px;
+  margin-bottom:10px;
+  color:#ffd53b;
+}
+.vivid-timers .dual-timer-card strong{
+  font-size:clamp(104px,7vw,148px);
+  margin:8px 0 18px;
+  color:#fbffeb;
+  text-shadow:
+    0 0 18px rgba(255,255,255,.18),
+    0 0 36px rgba(255,213,59,.28);
+}
+.vivid-timers .dual-timer-card em{
+  font-size:15px;
+  padding:11px 18px;
+  background:rgba(255,255,255,.16);
+}
+.vivid-scoreboard-grid{
+  display:block!important;
+}
+.vivid-ranking-panel{
+  min-height:560px;
+  padding:28px 30px 34px;
+  border:2px solid rgba(157,255,189,.32);
+  background:
+    linear-gradient(180deg,rgba(11,84,49,.70),rgba(8,50,32,.68)),
+    rgba(255,255,255,.08);
+  box-shadow:
+    0 30px 92px rgba(0,0,0,.38),
+    0 0 42px rgba(54,214,111,.10);
+}
+.vivid-panel-title{
+  margin-bottom:22px;
+  border-bottom:2px solid rgba(255,213,59,.32);
+  padding-bottom:18px;
+}
+.vivid-panel-title h2{
+  font-size:clamp(42px,4.2vw,72px);
+  color:#ffd53b;
+  letter-spacing:2px;
+  text-shadow:0 0 26px rgba(255,213,59,.25);
+}
+.vivid-panel-title span{
+  font-size:18px;
+  color:#9dffbd;
+}
+.vivid-ranking{
+  gap:18px;
+}
+.vivid-ranking .champ-rank-row{
+  grid-template-columns:110px 1fr 230px;
+  min-height:106px;
+  padding:22px 24px;
+  border-radius:26px;
+  background:linear-gradient(90deg,rgba(255,255,255,.14),rgba(255,255,255,.065));
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 16px 42px rgba(0,0,0,.20);
+}
+.vivid-ranking .champ-rank-row.rank-1{
+  background:
+    linear-gradient(90deg,rgba(255,213,59,.36),rgba(255,255,255,.09));
+  border-color:rgba(255,213,59,.70);
+  box-shadow:
+    0 0 0 1px rgba(255,213,59,.24),
+    0 18px 54px rgba(0,0,0,.28),
+    0 0 38px rgba(255,213,59,.22);
+}
+.vivid-ranking .champ-rank-row.rank-2{
+  background:linear-gradient(90deg,rgba(220,235,255,.24),rgba(255,255,255,.075));
+  border-color:rgba(220,235,255,.35);
+}
+.vivid-ranking .champ-rank-row.rank-3{
+  background:linear-gradient(90deg,rgba(205,127,50,.25),rgba(255,255,255,.075));
+  border-color:rgba(205,127,50,.40);
+}
+.vivid-ranking .champ-pos{
+  font-size:54px;
+}
+.vivid-ranking .champ-team strong{
+  font-size:clamp(34px,2.8vw,58px);
+}
+.vivid-ranking .champ-team small{
+  font-size:15px;
+  color:#dfffe7;
+}
+.vivid-ranking .score-bar{
+  height:13px;
+  background:rgba(255,255,255,.16);
+}
+.vivid-ranking .score-bar i{
+  background:linear-gradient(90deg,#7cffaa,#ffd53b);
+  box-shadow:0 0 16px rgba(124,255,170,.30);
+}
+.vivid-ranking .champ-points strong{
+  font-size:clamp(58px,4.2vw,82px);
+  color:#ffd53b;
+  text-shadow:0 0 26px rgba(255,213,59,.26);
+}
+.vivid-ranking .champ-points span{
+  font-size:18px;
+}
+.vivid-rounds{
+  border:2px solid rgba(255,213,59,.28);
+  background:linear-gradient(180deg,rgba(12,77,46,.66),rgba(10,55,36,.62));
+}
+.vivid-rounds .panel-title h2{
+  color:#ffd53b;
+}
+.vivid-rounds .champ-table td{
+  background:rgba(255,255,255,.11);
+}
+.vivid-dashboard .empty-state{
+  color:#e8ffe6;
+  border-color:rgba(255,213,59,.30);
+}
+@media(max-width:1350px){
+  .vivid-hero{grid-template-columns:1fr}
+  .vivid-timers .dual-timer-card strong{font-size:112px}
+}
+@media(max-width:780px){
+  .vivid-timers{grid-template-columns:1fr}
+  .vivid-ranking .champ-rank-row{grid-template-columns:1fr;gap:10px}
+  .vivid-ranking .champ-points{text-align:left}
+  .vivid-panel-title{align-items:flex-start;gap:8px;flex-direction:column}
+}
+
+/* =========================================================
+   DASHBOARD EM UMA ÚNICA TELA - AJUSTE AUTOMÁTICO
+   Mantém cronômetros, ranking e resultados visíveis sem rolagem.
+   Conforme aumenta o número de equipes, as linhas reduzem.
+   ========================================================= */
+.championship-body.vivid-dashboard{
+  overflow:hidden!important;
+}
+.vivid-dashboard .scoreboard-header{
+  height:64px;
+  min-height:64px;
+  padding:8px 22px;
+}
+.vivid-dashboard .logo-card{
+  width:46px;
+  height:46px;
+  border-radius:14px;
+}
+.vivid-dashboard .event-brand strong{
+  font-size:15px;
+}
+.vivid-dashboard .event-brand span{
+  font-size:10px;
+}
+.vivid-dashboard .live-pill{
+  padding:8px 13px;
+  font-size:12px;
+}
+.vivid-dashboard .header-actions a{
+  padding:8px 11px;
+  font-size:12px;
+}
+.vivid-layout{
+  width:min(1840px,96vw);
+  height:calc(100vh - 80px);
+  margin:8px auto;
+  display:grid;
+  grid-template-rows:145px minmax(0,1fr) minmax(120px,25vh);
+  gap:10px;
+  overflow:hidden;
+}
+.vivid-hero{
+  margin:0!important;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(430px,520px);
+  gap:12px;
+  min-height:0;
+}
+.vivid-hero .hero-left{
+  padding:18px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.vivid-hero .eyebrow{
+  margin-bottom:6px;
+  font-size:12px;
+}
+.vivid-hero .hero-left h1{
+  font-size:clamp(34px,4.4vw,66px);
+  line-height:.9;
+  margin:0;
+}
+.vivid-timers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  min-height:0;
+}
+.vivid-timers .dual-timer-card{
+  min-height:0;
+  height:100%;
+  padding:12px 14px;
+  border-radius:22px;
+}
+.vivid-timers .dual-timer-card span{
+  font-size:13px;
+  margin-bottom:2px;
+}
+.vivid-timers .dual-timer-card strong{
+  font-size:clamp(54px,5.8vw,86px);
+  margin:4px 0 8px;
+}
+.vivid-timers .dual-timer-card em{
+  padding:6px 10px;
+  font-size:11px;
+}
+.integrated-scoreboard-grid.vivid-scoreboard-grid{
+  display:block;
+  min-height:0;
+  overflow:hidden;
+}
+.vivid-ranking-panel{
+  height:100%;
+  min-height:0!important;
+  padding:14px 18px;
+  overflow:hidden;
+}
+.vivid-panel-title,
+.vivid-ranking-panel .panel-title{
+  margin-bottom:8px;
+}
+.vivid-panel-title h2,
+.vivid-ranking-panel .panel-title h2{
+  font-size:clamp(26px,3.4vw,48px);
+  line-height:1;
+}
+.vivid-ranking-panel .panel-title span{
+  font-size:13px;
+}
+.vivid-ranking{
+  height:calc(100% - 58px);
+  min-height:0;
+  display:grid;
+  align-content:start;
+  gap:8px;
+  overflow:hidden;
+}
+.vivid-ranking .champ-rank-row{
+  min-height:0;
+  padding:10px 14px;
+  border-radius:18px;
+  grid-template-columns:70px 1fr 130px;
+  gap:12px;
+}
+.vivid-ranking .champ-pos{
+  font-size:34px;
+}
+.vivid-ranking .champ-team strong{
+  font-size:clamp(22px,2.6vw,38px);
+  line-height:.98;
+}
+.vivid-ranking .champ-team small{
+  font-size:12px;
+  margin:2px 0 6px;
+}
+.vivid-ranking .score-bar{
+  height:7px;
+}
+.vivid-ranking .champ-points strong{
+  font-size:clamp(34px,4vw,58px);
+}
+.vivid-ranking .champ-points span{
+  font-size:11px;
+}
+.vivid-rounds{
+  margin:0!important;
+  padding:12px 18px!important;
+  min-height:0;
+  overflow:hidden;
+}
+.vivid-rounds .panel-title{
+  margin-bottom:6px;
+}
+.vivid-rounds .panel-title h2{
+  font-size:clamp(18px,2vw,28px);
+}
+.vivid-rounds .panel-title span{
+  font-size:11px;
+}
+.vivid-rounds .table-wrap{
+  height:calc(100% - 42px);
+  min-height:0;
+  overflow:hidden;
+}
+.vivid-rounds .champ-table{
+  border-spacing:0 5px;
+}
+.vivid-rounds .champ-table th{
+  font-size:10px;
+  padding:0 9px 2px;
+}
+.vivid-rounds .champ-table td{
+  padding:7px 10px;
+  font-size:14px;
+}
+.vivid-rounds .champ-table small{
+  font-size:9px;
+  margin-top:1px;
+}
+.vivid-rounds .best-badge,
+.vivid-rounds .reserved-badge{
+  padding:5px 8px;
+  font-size:11px;
+}
+
+/* 7+ equipes: compacta ranking e resultados */
+.dashboard-many .vivid-layout{
+  grid-template-rows:125px minmax(0,1fr) minmax(110px,23vh);
+  gap:8px;
+}
+.dashboard-many .vivid-hero .hero-left h1{
+  font-size:clamp(30px,4vw,58px);
+}
+.dashboard-many .vivid-timers .dual-timer-card strong{
+  font-size:clamp(48px,5vw,76px);
+}
+.dashboard-many .vivid-ranking{
+  gap:6px;
+}
+.dashboard-many .vivid-ranking .champ-rank-row{
+  padding:7px 12px;
+  border-radius:15px;
+  grid-template-columns:54px 1fr 100px;
+}
+.dashboard-many .vivid-ranking .champ-pos{
+  font-size:26px;
+}
+.dashboard-many .vivid-ranking .champ-team strong{
+  font-size:clamp(18px,2vw,30px);
+}
+.dashboard-many .vivid-ranking .champ-team small{
+  display:none;
+}
+.dashboard-many .vivid-ranking .champ-points strong{
+  font-size:clamp(28px,3vw,42px);
+}
+.dashboard-many .vivid-rounds .champ-table td{
+  padding:5px 8px;
+  font-size:12px;
+}
+.dashboard-many .vivid-rounds .champ-table th{
+  font-size:9px;
+}
+
+/* 11+ equipes: ultra compacto */
+.dashboard-lots .vivid-layout{
+  grid-template-rows:105px minmax(0,1fr) minmax(96px,20vh);
+  gap:7px;
+}
+.dashboard-lots .vivid-dashboard .scoreboard-header,
+.dashboard-lots .scoreboard-header{
+  height:58px;
+  min-height:58px;
+}
+.dashboard-lots .vivid-hero .hero-left{
+  padding:12px 18px;
+}
+.dashboard-lots .vivid-hero .eyebrow{
+  font-size:10px;
+}
+.dashboard-lots .vivid-hero .hero-left h1{
+  font-size:clamp(26px,3.4vw,46px);
+}
+.dashboard-lots .vivid-timers .dual-timer-card{
+  padding:8px 10px;
+  border-radius:18px;
+}
+.dashboard-lots .vivid-timers .dual-timer-card span{
+  font-size:10px;
+}
+.dashboard-lots .vivid-timers .dual-timer-card strong{
+  font-size:clamp(38px,4.4vw,62px);
+}
+.dashboard-lots .vivid-timers .dual-timer-card em{
+  padding:4px 8px;
+  font-size:9px;
+}
+.dashboard-lots .vivid-ranking-panel{
+  padding:10px 14px;
+}
+.dashboard-lots .vivid-panel-title h2,
+.dashboard-lots .vivid-ranking-panel .panel-title h2{
+  font-size:clamp(22px,2.5vw,36px);
+}
+.dashboard-lots .vivid-ranking{
+  gap:4px;
+  height:calc(100% - 42px);
+}
+.dashboard-lots .vivid-ranking .champ-rank-row{
+  padding:5px 10px;
+  grid-template-columns:42px 1fr 82px;
+  gap:8px;
+}
+.dashboard-lots .vivid-ranking .champ-pos{
+  font-size:20px;
+}
+.dashboard-lots .vivid-ranking .champ-team strong{
+  font-size:clamp(14px,1.6vw,24px);
+}
+.dashboard-lots .vivid-ranking .score-bar{
+  height:5px;
+  margin-top:3px;
+}
+.dashboard-lots .vivid-ranking .champ-points strong{
+  font-size:clamp(22px,2.4vw,34px);
+}
+.dashboard-lots .vivid-ranking .champ-points span{
+  font-size:9px;
+}
+.dashboard-lots .vivid-rounds{
+  padding:8px 12px!important;
+}
+.dashboard-lots .vivid-rounds .panel-title{
+  margin-bottom:3px;
+}
+.dashboard-lots .vivid-rounds .panel-title h2{
+  font-size:16px;
+}
+.dashboard-lots .vivid-rounds .panel-title span{
+  font-size:9px;
+}
+.dashboard-lots .vivid-rounds .table-wrap{
+  height:calc(100% - 28px);
+}
+.dashboard-lots .vivid-rounds .champ-table{
+  border-spacing:0 3px;
+}
+.dashboard-lots .vivid-rounds .champ-table th{
+  font-size:8px;
+}
+.dashboard-lots .vivid-rounds .champ-table td{
+  padding:3px 7px;
+  font-size:10px;
+}
+.dashboard-lots .vivid-rounds .best-badge,
+.dashboard-lots .vivid-rounds .reserved-badge{
+  padding:3px 6px;
+  font-size:9px;
+}
+
+@media(max-width:900px){
+  .championship-body.vivid-dashboard{overflow:auto!important;}
+  .vivid-layout{height:auto;overflow:visible;grid-template-rows:auto;}
+  .vivid-hero{grid-template-columns:1fr;}
+  .vivid-ranking{height:auto;overflow:visible;}
+  .vivid-rounds .table-wrap{height:auto;overflow:auto;}
+}
+
+/* =========================================================
+   SOMATÓRIA PRIVADA NO ADMIN PARA ANÚNCIO DO CAMPEÃO
+   ========================================================= */
+.admin-champion-card{
+  border-color:#ffd53b;
+  background:linear-gradient(180deg,rgba(255,253,244,.99),rgba(255,248,214,.98));
+}
+.admin-champion-card h2{
+  color:var(--green-dark);
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+.champion-sum-table th:last-child,
+.champion-sum-table td:last-child{
+  text-align:right;
+}
+.champion-total-badge{
+  font-size:18px;
+  background:#ffd53b;
+  color:#03140d;
+  border-color:#e9bd22;
+}
+.champion-sum-row.champion-pos-1 td{
+  background:#fff7cb;
+  border-top:2px solid #ffd53b;
+  border-bottom:2px solid #ffd53b;
+}
+.champion-sum-row.champion-pos-1 td:first-child{
+  border-left:2px solid #ffd53b;
+}
+.champion-sum-row.champion-pos-1 td:last-child{
+  border-right:2px solid #ffd53b;
+}
+.champion-sum-row.champion-pos-2 td{
+  background:#f5f7f7;
+}
+.champion-sum-row.champion-pos-3 td{
+  background:#fff0df;
+}

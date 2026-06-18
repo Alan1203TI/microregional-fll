@@ -236,6 +236,12 @@ onSnapshot(query(collection(db, 'results')), (snap) => {
 
   const ranking = buildRanking(results);
 
+  const count = ranking.length;
+  document.body.classList.toggle('dashboard-many', count > 6);
+  document.body.classList.toggle('dashboard-lots', count > 10);
+  rankingEl?.classList.toggle('many-teams', count > 6);
+  rankingEl?.classList.toggle('lots-teams', count > 10);
+
   renderRanking(ranking);
   renderRoundsTable(ranking);
   renderLastVisibleResult(results);
