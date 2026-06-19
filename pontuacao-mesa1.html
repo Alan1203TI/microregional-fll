@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Pontuação Mesa 1 - FLL 2026</title>
   <link rel="stylesheet" href="style.css?v=20260618-mesa2">
+
 </head>
 <body data-table-id="mesa1" data-table-name="Mesa 1">
-  <header class="topbar">
+  <header class="topbar" id="mesaTopbar" style="display:none">
     <div class="brand">
       <div class="logo"><img src="assets/bioglow-logo.png" alt="BIOGLOW"></div>
       <div>
@@ -24,7 +25,25 @@
     </nav>
   </header>
 
-  <main class="container">
+
+
+  <main class="admin-login-wrap" id="mesaLoginScreen">
+    <section class="card admin-login-card">
+      <div class="admin-lock-icon">🔒</div>
+      <h1>Mesa 1</h1>
+      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 1.</p>
+
+      <div class="field">
+        <label>Senha da Mesa 1</label>
+        <input id="mesaPasswordInput" type="password" placeholder="Digite a senha">
+      </div>
+
+      <button class="btn primary full-btn" id="mesaLoginBtn" type="button">Entrar</button>
+      <div class="admin-login-error" id="mesaLoginError"></div>
+    </section>
+  </main>
+
+  <main class="container" id="mesaContent" style="display:none">
     <div class="grid">
       <section>
         <div class="card">
@@ -91,12 +110,66 @@
     </div>
   </main>
 
-  <div class="footer-actions">
+  <div class="footer-actions" id="mesaFooter" style="display:none">
     <button class="btn primary" id="saveBtn">Salvar resultado</button>
     <button class="btn" id="newBtn">Novo lançamento</button>
   </div>
 
   <div class="toast" id="toast"></div>
+
+
+  <script>
+    (function () {
+      const MESA_PASSWORD = 'mesa1@2026';
+      const AUTH_KEY = 'auth_mesa1';
+
+      const loginScreen = document.getElementById('mesaLoginScreen');
+      const topbar = document.getElementById('mesaTopbar');
+      const content = document.getElementById('mesaContent');
+      const footer = document.getElementById('mesaFooter');
+      const input = document.getElementById('mesaPasswordInput');
+      const button = document.getElementById('mesaLoginBtn');
+      const error = document.getElementById('mesaLoginError');
+
+      function showMesa() {
+        if (loginScreen) loginScreen.style.display = 'none';
+        if (topbar) topbar.style.display = '';
+        if (content) content.style.display = '';
+        if (footer) footer.style.display = '';
+      }
+
+      function showLogin() {
+        if (loginScreen) loginScreen.style.display = '';
+        if (topbar) topbar.style.display = 'none';
+        if (content) content.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+        setTimeout(() => input && input.focus(), 100);
+      }
+
+      function handleLogin() {
+        if (input && input.value === MESA_PASSWORD) {
+          sessionStorage.setItem(AUTH_KEY, 'ok');
+          if (error) error.textContent = '';
+          showMesa();
+          return;
+        }
+
+        if (error) error.textContent = 'Senha incorreta. Tente novamente.';
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      if (button) button.addEventListener('click', handleLogin);
+      if (input) input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') handleLogin();
+      });
+
+      if (sessionStorage.getItem(AUTH_KEY) === 'ok') showMesa();
+      else showLogin();
+    })();
+  </script>
 
   <script type="module" src="visual-settings.js?v=20260618-mesa2"></script>
   <script type="module" src="app.js?v=20260618-mesa2"></script>
