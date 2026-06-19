@@ -2075,3 +2075,124 @@ body[data-table-id="mesa2"] .judge-timer-actions{
 .judge-control-horizontal .judge-main-row{
   grid-template-columns:1fr;
 }
+
+/* =========================================================
+   AJUSTE FINAL - DASHBOARD RESULTADOS EM TELA CHEIA
+   ========================================================= */
+body.championship-body.vivid-dashboard{
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .vivid-layout{
+  width:100vw!important;
+  max-width:none!important;
+  height:calc(100vh - 64px)!important;
+  margin:0!important;
+  padding:14px 28px 20px!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  gap:14px!important;
+  box-sizing:border-box!important;
+}
+body.championship-body.vivid-dashboard .vivid-hero{
+  width:100%!important;
+  max-width:none!important;
+  display:block!important;
+  margin:0!important;
+}
+body.championship-body.vivid-dashboard .vivid-hero .hero-left{
+  width:100%!important;
+  max-width:none!important;
+  min-height:120px!important;
+  padding:18px 32px!important;
+  box-sizing:border-box!important;
+}
+body.championship-body.vivid-dashboard .vivid-hero .hero-left h1{
+  font-size:clamp(46px,5vw,92px)!important;
+  line-height:.9!important;
+}
+body.championship-body.vivid-dashboard .vivid-hero .eyebrow{
+  font-size:clamp(12px,1vw,16px)!important;
+  margin-bottom:6px!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only{
+  width:100%!important;
+  max-width:none!important;
+  height:100%!important;
+  margin:0!important;
+  padding:14px 22px 16px!important;
+  box-sizing:border-box!important;
+  border-radius:24px!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .panel-title{
+  margin-bottom:8px!important;
+  min-height:0!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .panel-title h2{
+  font-size:clamp(30px,3.4vw,56px)!important;
+  line-height:1!important;
+  margin:0!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .panel-title span{
+  font-size:clamp(11px,1vw,15px)!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .table-wrap{
+  height:calc(100% - 58px)!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .champ-table{
+  width:100%!important;
+  height:auto!important;
+  border-collapse:separate!important;
+  border-spacing:0 5px!important;
+  table-layout:fixed!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .champ-table th{
+  padding:0 12px 4px!important;
+  font-size:clamp(10px,.9vw,14px)!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .champ-table td{
+  padding:8px 12px!important;
+  font-size:clamp(15px,1.25vw,22px)!important;
+  line-height:1.15!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .champ-table td:first-child strong{
+  font-size:clamp(16px,1.45vw,24px)!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only .champ-table small{
+  display:block!important;
+  font-size:8px!important;
+  line-height:1!important;
+  margin-top:2px!important;
+}
+body.dashboard-many.championship-body.vivid-dashboard .dashboard-results-only .champ-table{
+  border-spacing:0 4px!important;
+}
+body.dashboard-many.championship-body.vivid-dashboard .dashboard-results-only .champ-table td{
+  padding:6px 10px!important;
+  font-size:clamp(13px,1vw,18px)!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .vivid-layout{
+  padding:10px 22px 14px!important;
+  gap:10px!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .vivid-hero .hero-left{
+  min-height:92px!important;
+  padding:12px 24px!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .vivid-hero .hero-left h1{
+  font-size:clamp(34px,4vw,68px)!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .dashboard-results-only{
+  padding:10px 16px 12px!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .dashboard-results-only .table-wrap{
+  height:calc(100% - 42px)!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .dashboard-results-only .champ-table{
+  border-spacing:0 3px!important;
+}
+body.dashboard-lots.championship-body.vivid-dashboard .dashboard-results-only .champ-table td{
+  padding:4px 8px!important;
+  font-size:clamp(11px,.9vw,15px)!important;
+}
