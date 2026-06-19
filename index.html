@@ -1,6 +1,140 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { firebaseConfig } from "./firebase-config.js";
+<!doctype html>
+<html lang="pt-BR">
 
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Microregional FLL 2026</title>
+
+  <link rel="stylesheet" href="style.css?v=20260618-mesa2">
+</head>
+
+<body class="home-body">
+
+  <div class="home-bg"></div>
+
+  <main class="home-screen">
+
+    <section class="home-hero-card">
+
+      <div class="home-logo-wrap">
+
+        <img
+          src="./assets/bioglow-logo.png?v=2"
+          alt="BIOGLOW"
+          loading="eager">
+
+      </div>
+
+      <p class="eyebrow">
+        MICRORREGIONAL MG 2026
+      </p>
+
+      <h1>
+        DESAFIO DO ROBÔ
+      </h1>
+
+      <p class="home-subtitle">
+
+        Sistema de pontuação integrado para duas mesas simultâneas
+        da competição.
+
+      </p>
+
+      <div class="home-actions-grid">
+
+        <a class="home-action-card mesa-card"
+           href="pontuacao-mesa1.html">
+
+          <span>
+            MESA 1
+          </span>
+
+          <strong>
+            Pontuação
+          </strong>
+
+          <small>
+            Abrir painel do árbitro da Mesa 1
+          </small>
+
+        </a>
+
+
+        <a class="home-action-card mesa-card"
+           href="pontuacao-mesa2.html">
+
+          <span>
+            MESA 2
+          </span>
+
+          <strong>
+            Pontuação
+          </strong>
+
+          <small>
+            Abrir painel do árbitro da Mesa 2
+          </small>
+
+        </a>
+
+
+        <a class="home-action-card dashboard-card"
+           href="dashboard.html"
+           target="_blank">
+
+          <span>
+            TELÃO
+          </span>
+
+          <strong>
+            Dashboard
+          </strong>
+
+          <small>
+            Ranking geral integrado das duas mesas
+          </small>
+
+        </a>
+
+
+        <a class="home-action-card admin-card"
+           href="admin.html">
+
+          <span>
+            ADMIN
+          </span>
+
+          <strong>
+            Área administrativa
+          </strong>
+
+          <small>
+            Cadastro, ranking completo e limpeza de dados
+          </small>
+
+        </a>
+
+      </div>
+
+      <div class="home-footer-note">
+
+        <strong>
+          Ranking final:
+        </strong>
+
+        maior nota oficial entre Round Oficial 1 e Round 2.
+
+        Round Teste não classifica.
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="visual-settings.js?v=20260618-mesa2"></script>
+
+</body>
+
+</html>
