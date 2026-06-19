@@ -1431,7 +1431,7 @@ body{
 /* =========================================================
    AJUSTES FINAIS DO DASHBOARD PÚBLICO
    - evita sobreposição do título com o ranking
-   - dashboard público usa somente Round Oficial 1
+   - dashboard público usa somente Round 1
    - Round 2 fica apenas no Admin
    ========================================================= */
 .championship-body.vivid-dashboard{
@@ -1753,7 +1753,7 @@ body{
   padding:6px 10px!important;
 }
 
-/* Painel do árbitro mais horizontal e compacto */
+/* Painel do juiz mais horizontal e compacto */
 @media(min-width:901px){
   .grid{
     grid-template-columns:minmax(0,1fr) 460px!important;
@@ -1947,34 +1947,131 @@ body[data-table-id="mesa2"] .judge-timer-actions{
   body[data-table-id="mesa2"] .judge-main-row{grid-template-columns:1fr!important}
 }
 
-.giant-admin-timer{
-  font-size: clamp(72px, 14vw, 170px);
-  line-height: 1;
-  font-weight: 900;
-  text-align: center;
-  letter-spacing: 4px;
-  margin: 16px 0 6px;
-}
-.admin-timer-status{
-  text-align: center;
-  font-weight: 800;
-  font-size: 22px;
-  margin-bottom: 18px;
-}
 
-
-/* Dashboard sem cronômetros: foco total nos resultados */
+/* Ajustes solicitados - cronômetro oficial e dashboard somente resultados */
+.unified-hero{
+  justify-content:center;
+  text-align:center;
+}
+.dashboard-results-only{
+  max-width:1180px;
+  margin:0 auto;
+}
+.dashboard-results-only .champ-table th:nth-child(1){text-align:left}
 .dashboard-results-only .champ-table th,
 .dashboard-results-only .champ-table td{
   text-align:center;
 }
-.dashboard-results-only .champ-table th:first-child,
-.dashboard-results-only .champ-table td:first-child{
+.dashboard-results-only .champ-table th:nth-child(1),
+.dashboard-results-only .champ-table td:nth-child(1){
   text-align:left;
 }
-.unified-dashboard .hero-scoreboard .hero-left{
-  width:100%;
+.admin-timer-control{
+  position:relative;
+  margin:18px 0 22px;
+  padding:18px;
+  border-radius:22px;
+  background:linear-gradient(135deg,rgba(13,93,55,.96),rgba(36,139,85,.92));
+  border:3px solid var(--yellow);
+  color:white;
+  box-shadow:var(--shadow);
 }
-.unified-dashboard .rounds-scoreboard.dashboard-results-only{
-  width:100%;
+.admin-timer-control h3{
+  color:white;
+  margin:0 0 6px;
+  font-size:24px;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.admin-timer-control .muted{
+  color:#eef7df;
+}
+.admin-big-timer{
+  font-size:clamp(54px,9vw,110px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:2px;
+  text-align:center;
+  margin:14px 0;
+  color:var(--yellow);
+  text-shadow:0 6px 22px rgba(0,0,0,.28);
+}
+.admin-big-timer.danger{color:#ffb300}
+.admin-big-timer.critical,.admin-big-timer.finished{color:#ff4d4d}
+.timer-actions{
+  align-items:center;
+}
+.official-timer-layout{
+  min-height:calc(100vh - 96px);
+  display:grid;
+  place-items:center;
+  padding:28px 18px;
+}
+.official-timer-card{
+  width:min(1120px,96vw);
+  position:relative;
+  overflow:hidden;
+  border-radius:36px;
+  padding:clamp(28px,5vw,70px);
+  text-align:center;
+  color:white;
+  background:
+    linear-gradient(135deg,rgba(13,93,55,.96),rgba(36,139,85,.88)),
+    url("assets/topo-bioglow.jpeg") center/cover;
+  border:6px solid var(--yellow);
+  box-shadow:0 24px 70px rgba(0,0,0,.35);
+}
+.official-timer-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right,rgba(255,213,59,.22),transparent 36%);
+  pointer-events:none;
+}
+.official-timer-card > *{
+  position:relative;
+}
+.official-timer-card h1{
+  margin:0 0 24px;
+  font-size:clamp(28px,5vw,64px);
+  line-height:1;
+  font-weight:1000;
+  text-transform:uppercase;
+  color:#fff;
+}
+.official-timer-display{
+  font-size:clamp(104px,24vw,310px);
+  line-height:.9;
+  font-weight:1000;
+  letter-spacing:4px;
+  color:var(--yellow);
+  text-shadow:0 12px 34px rgba(0,0,0,.34);
+}
+.official-timer-display.danger{color:#ffb300}
+.official-timer-display.critical,.official-timer-display.finished{color:#ff4d4d}
+.official-timer-status{
+  display:inline-block;
+  margin:24px 0 10px;
+  padding:12px 26px;
+  border-radius:999px;
+  font-size:clamp(18px,2vw,30px);
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  background:rgba(255,255,255,.16);
+  border:2px solid rgba(255,255,255,.28);
+}
+.official-timer-status.running{
+  background:rgba(168,207,90,.24);
+  color:#f7ffe6;
+}
+.official-timer-status.finished{
+  background:rgba(229,57,53,.26);
+}
+.official-timer-card .muted{
+  color:#eef7df;
+  font-size:18px;
+}
+.judge-control-horizontal .judge-main-row{
+  grid-template-columns:1fr;
 }
