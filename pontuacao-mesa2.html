@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pontuação Mesa 2 - FLL 2026</title>
+  <title>Pontuação Mesa 1 - FLL 2026</title>
   <link rel="stylesheet" href="style.css?v=20260618-mesa2">
 
 </head>
-<body data-table-id="mesa2" data-table-name="Mesa 2">
+<body data-table-id="mesa1" data-table-name="Mesa 1">
   <header class="topbar" id="mesaTopbar" style="display:none">
     <div class="brand">
       <div class="logo"><img src="assets/bioglow-logo.png" alt="BIOGLOW"></div>
       <div>
-        <div>Pontuação Desafio do Robô - Mesa 2</div>
+        <div>Pontuação Desafio do Robô - Mesa 1</div>
         <small>Microrregional FLL 2026</small>
       </div>
     </div>
@@ -30,11 +30,11 @@
   <main class="admin-login-wrap" id="mesaLoginScreen">
     <section class="card admin-login-card">
       <div class="admin-lock-icon">🔒</div>
-      <h1>Mesa 2</h1>
-      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 2.</p>
+      <h1>Mesa 1</h1>
+      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 1.</p>
 
       <div class="field">
-        <label>Senha da Mesa 2</label>
+        <label>Senha da Mesa 1</label>
         <input id="mesaPasswordInput" type="password" placeholder="Digite a senha">
       </div>
 
@@ -47,7 +47,7 @@
     <div class="grid">
       <section>
         <div class="card">
-          <h2>Lançamento de pontuação - Mesa 2</h2>
+          <h2>Lançamento de pontuação - Mesa 1</h2>
 
           <div class="setup">
             <div class="field">
@@ -58,15 +58,15 @@
             <div class="field">
               <label>Round</label>
               <select id="roundSelect">
-                <option value="TESTE">TESTE</option>
-                <option value="1">ROUND 1</option>
+                <option value="ROUND TESTE">ROUND TESTE</option>
+                <option value="1">ROUND OFICIAL 1</option>
                 <option value="2">ROUND 2</option>
               </select>
             </div>
 
             <div class="field">
-              <label>Juiz</label>
-              <input id="judgeInput" placeholder="Nome do juiz">
+              <label>Árbitro</label>
+              <input id="judgeInput" placeholder="Nome do árbitro">
             </div>
           </div>
         </div>
@@ -78,19 +78,13 @@
         <div class="card judge-control-panel judge-control-horizontal">
           <div class="judge-context">
             <span>Mesa atual</span>
-            <strong id="currentTableDisplay">Mesa 2</strong>
+            <strong id="currentTableDisplay">Mesa 1</strong>
             <span>Equipe atual</span>
             <strong id="currentTeamDisplay">Selecione uma equipe</strong>
-            <small id="currentRoundDisplay">Round TESTE</small>
+            <small id="currentRoundDisplay">Round Teste</small>
           </div>
 
           <div class="judge-main-row">
-            <div class="judge-timer-area">
-              <h3>Cronômetro</h3>
-              <div class="judge-timer-display" id="judgeTimerDisplay">02:30</div>
-              <div class="judge-timer-status" id="judgeTimerStatus">Parado</div>
-            </div>
-
             <div class="judge-score-area">
               <h3>Pontuação</h3>
               <div class="score judge-score"><span id="totalScore">0</span></div>
@@ -98,11 +92,7 @@
             </div>
           </div>
 
-          <div class="judge-timer-actions">
-            <button class="btn primary" id="judgeStartTimer">Iniciar</button>
-            <button class="btn" id="judgePauseTimer">Pausar</button>
-            <button class="btn red" id="judgeResetTimer">Reiniciar</button>
-          </div>
+          
 
           <button class="btn red full-btn" id="clearBtn">Limpar marcação</button>
         </div>
@@ -120,8 +110,8 @@
 
   <script>
     (function () {
-      const MESA_PASSWORD = 'mesa2@2026';
-      const AUTH_KEY = 'auth_mesa2';
+      const MESA_PASSWORD = 'mesa1@2026';
+      const AUTH_KEY = 'auth_mesa1';
 
       const loginScreen = document.getElementById('mesaLoginScreen');
       const topbar = document.getElementById('mesaTopbar');

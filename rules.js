@@ -1,65 +1,167 @@
-export const TEAMS_DEFAULT = ["MODELO 1", "MODELO 2", "MODELO 3", "MODELO 4", "MODELO 5", "MODELO 6"];
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pontuação Mesa 2 - FLL 2026</title>
+  <link rel="stylesheet" href="style.css?v=20260618-mesa2">
 
-export const MISSIONS = [
-  { id: "inspecao", title: "INSPEÇÃO", type: "checks", items: [
-    { id: "q3", text: "O robô da equipe e todos os equipamentos couberam completamente em apenas uma área de lançamento e tiveram, no máximo, 12 pol. (305mm) durante a inspeção.", points: 20 }
-  ]},
-  { id: "m1", title: "MISSÃO 1 - A CAPTURA DOS GAFANHOTOS", type: "checks", items: [
-    { id: "q4", text: "O primeiro gafanhoto não está tocando mais o suporte", points: 10 },
-    { id: "q5", text: "O segundo gafanhoto não está tocando mais o suporte", points: 10 }
-  ]},
-  { id: "m2", title: "MISSÃO 2 - O MANEJO DOS GAFANHOTOS", type: "checks", items: [
-    { id: "q6", text: "O primeiro gafanhoto está em contato com a planta carnívora, sem tocar o tapete em qualquer ponto", points: 15 },
-    { id: "q7", text: "O segundo gafanhoto está em contato com a planta carnívora, sem tocar o tapete em qualquer ponto", points: 15 }
-  ]},
-  { id: "m3", title: "MISSÃO 3 - PLANTA DO AR", type: "single", items: [
-    { id: "q8", text: "A planta está erguida parcialmente", points: 15 },
-    { id: "q9", text: "OU a planta está erguida totalmente", points: 30 }
-  ]},
-  { id: "m4", title: "MISSÃO 4 - TEIA EM EQUILÍBRIO", type: "checks", items: [
-    { id: "q10", text: "A teia está desprendida do galho da árvore", points: 15 }
-  ]},
-  { id: "m5", title: "MISSÃO 5 - REFLORESTAMENTO", type: "checks", items: [
-    { id: "q11", text: "A árvore está totalmente levantada", points: 20 }
-  ]},
-  { id: "m6", title: "MISSÃO 6 - FOLHAS DO OUTONO", type: "checks", items: [
-    { id: "q12", text: "As duas folhas se desprenderam da árvore e caíram no tapete após acionamento da pá", points: 10 }
-  ]},
-  { id: "m7", title: "MISSÃO 7 - DE VOLTA ÀS RAÍZES", type: "checks", items: [
-    { id: "q13", text: "A camada de terra foi abaixada e ficou em contato com o tapete, exibindo as raízes", points: 15 }
-  ]},
-  { id: "m8", title: "MISSÃO 8 - TUTORAMENTO DA ÁRVORE", type: "checks", items: [
-    { id: "q14", text: "A árvore está totalmente levantada e encostada na base", points: 15 }
-  ]},
-  { id: "m9", title: "MISSÃO 9 - PONTO DE TENSÃO", type: "checks", items: [
-    { id: "q15", text: "A contenção está totalmente derrubada, em contato com o tapete", points: 15 }
-  ]},
-  { id: "m10", title: "MISSÃO 10 - COLHEITA DOS FRUTOS", type: "checks", items: [
-    { id: "q16", text: "O Fruto 1 não está tocando mais a haste de suporte da missão", points: 10 },
-    { id: "q17", text: "O Fruto 2 não está tocando mais a haste de suporte da missão", points: 10 }
-  ]},
-  { id: "m11", title: "MISSÃO 11 - CONSERVAÇÃO DA FLORA", type: "checks", items: [
-    { id: "q18", text: "O Fruto 1 está totalmente dentro do reservatório", points: 15 },
-    { id: "q19", text: "O Fruto 2 está totalmente dentro do reservatório", points: 15 },
-    { id: "q20", text: "A Folha 1 está totalmente dentro do reservatório", points: 15 },
-    { id: "q21", text: "A Folha 2 está totalmente dentro do reservatório", points: 15 }
-  ]},
-  { id: "precision", title: "DISCOS DE PRECISÃO", type: "single", items: [
-    { id: "d1", text: "1 disco restante", points: 10 },
-    { id: "d2", text: "2 discos restantes", points: 15 },
-    { id: "d3", text: "3 discos restantes", points: 25 },
-    { id: "d4", text: "4 discos restantes", points: 35 },
-    { id: "d5", text: "5 discos restantes", points: 50 },
-    { id: "d6", text: "6 discos restantes", points: 50 }
-  ]}
-];
+</head>
+<body data-table-id="mesa2" data-table-name="Mesa 2">
+  <header class="topbar" id="mesaTopbar" style="display:none">
+    <div class="brand">
+      <div class="logo"><img src="assets/bioglow-logo.png" alt="BIOGLOW"></div>
+      <div>
+        <div>Pontuação Desafio do Robô - Mesa 2</div>
+        <small>Microrregional FLL 2026</small>
+      </div>
+    </div>
 
-export function calculateScore(answers = {}) {
-  let total = 0;
-  for (const mission of MISSIONS) {
-    for (const item of mission.items) {
-      if (answers[item.id] === true) total += item.points;
-    }
-  }
-  return total;
-}
+    <nav class="nav">
+      <a href="pontuacao-mesa1.html">Pontuação Mesa 1</a>
+      <a href="pontuacao-mesa2.html">Pontuação Mesa 2</a>
+      <a href="dashboard.html" target="_blank">Dashboard Geral</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+
+
+  <main class="admin-login-wrap" id="mesaLoginScreen">
+    <section class="card admin-login-card">
+      <div class="admin-lock-icon">🔒</div>
+      <h1>Mesa 2</h1>
+      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 2.</p>
+
+      <div class="field">
+        <label>Senha da Mesa 2</label>
+        <input id="mesaPasswordInput" type="password" placeholder="Digite a senha">
+      </div>
+
+      <button class="btn primary full-btn" id="mesaLoginBtn" type="button">Entrar</button>
+      <div class="admin-login-error" id="mesaLoginError"></div>
+    </section>
+  </main>
+
+  <main class="container" id="mesaContent" style="display:none">
+    <div class="grid">
+      <section>
+        <div class="card">
+          <h2>Lançamento de pontuação - Mesa 2</h2>
+
+          <div class="setup">
+            <div class="field">
+              <label>Equipe</label>
+              <select id="teamSelect"></select>
+            </div>
+
+            <div class="field">
+              <label>Round</label>
+              <select id="roundSelect">
+                <option value="ROUND TESTE">ROUND TESTE</option>
+                <option value="1">ROUND OFICIAL 1</option>
+                <option value="2">ROUND 2</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Árbitro</label>
+              <input id="judgeInput" placeholder="Nome do árbitro">
+            </div>
+          </div>
+        </div>
+
+        <div id="missions"></div>
+      </section>
+
+      <aside>
+        <div class="card judge-control-panel judge-control-horizontal">
+          <div class="judge-context">
+            <span>Mesa atual</span>
+            <strong id="currentTableDisplay">Mesa 2</strong>
+            <span>Equipe atual</span>
+            <strong id="currentTeamDisplay">Selecione uma equipe</strong>
+            <small id="currentRoundDisplay">Round Teste</small>
+          </div>
+
+          <div class="judge-main-row">
+            <div class="judge-score-area">
+              <h3>Pontuação</h3>
+              <div class="score judge-score"><span id="totalScore">0</span></div>
+              <strong>PONTOS</strong>
+            </div>
+          </div>
+
+          
+
+          <button class="btn red full-btn" id="clearBtn">Limpar marcação</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="footer-actions" id="mesaFooter" style="display:none">
+    <button class="btn primary" id="saveBtn">Salvar resultado</button>
+    <button class="btn" id="newBtn">Novo lançamento</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+    (function () {
+      const MESA_PASSWORD = 'mesa2@2026';
+      const AUTH_KEY = 'auth_mesa2';
+
+      const loginScreen = document.getElementById('mesaLoginScreen');
+      const topbar = document.getElementById('mesaTopbar');
+      const content = document.getElementById('mesaContent');
+      const footer = document.getElementById('mesaFooter');
+      const input = document.getElementById('mesaPasswordInput');
+      const button = document.getElementById('mesaLoginBtn');
+      const error = document.getElementById('mesaLoginError');
+
+      function showMesa() {
+        if (loginScreen) loginScreen.style.display = 'none';
+        if (topbar) topbar.style.display = '';
+        if (content) content.style.display = '';
+        if (footer) footer.style.display = '';
+      }
+
+      function showLogin() {
+        if (loginScreen) loginScreen.style.display = '';
+        if (topbar) topbar.style.display = 'none';
+        if (content) content.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+        setTimeout(() => input && input.focus(), 100);
+      }
+
+      function handleLogin() {
+        if (input && input.value === MESA_PASSWORD) {
+          sessionStorage.setItem(AUTH_KEY, 'ok');
+          if (error) error.textContent = '';
+          showMesa();
+          return;
+        }
+
+        if (error) error.textContent = 'Senha incorreta. Tente novamente.';
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      if (button) button.addEventListener('click', handleLogin);
+      if (input) input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') handleLogin();
+      });
+
+      if (sessionStorage.getItem(AUTH_KEY) === 'ok') showMesa();
+      else showLogin();
+    })();
+  </script>
+
+  <script type="module" src="visual-settings.js?v=20260618-mesa2"></script>
+  <script type="module" src="app.js?v=20260618-mesa2"></script>
+</body>
+</html>

@@ -1,12 +1,111 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard Geral - FLL 2026</title>
-  <link rel="stylesheet" href="style.css?v=20260618-mesa2">
+  <title>Cronômetro Geral - FLL 2026</title>
+  <link rel="stylesheet" href="style.css?v=20260619-cronometro-visual">
+  <style>
+    .timer-page-main{
+      width:min(1760px,96vw);
+      margin:24px auto 38px;
+      min-height:calc(100vh - 128px);
+      display:grid;
+      align-items:center;
+    }
+    .giant-timer-panel{
+      border:1px solid rgba(255,255,255,.13);
+      background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.045));
+      box-shadow:0 24px 80px rgba(0,0,0,.33);
+      border-radius:34px;
+      backdrop-filter:blur(10px);
+      padding:clamp(28px,5vw,72px);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .giant-timer-panel:before{
+      content:"";
+      position:absolute;
+      right:-120px;
+      top:-140px;
+      width:420px;
+      height:420px;
+      background:radial-gradient(circle,rgba(168,207,90,.30),transparent 66%);
+      pointer-events:none;
+    }
+    .giant-timer-panel:after{
+      content:"";
+      position:absolute;
+      left:-120px;
+      bottom:-160px;
+      width:420px;
+      height:420px;
+      background:radial-gradient(circle,rgba(255,213,59,.18),transparent 66%);
+      pointer-events:none;
+    }
+    .timer-eyebrow{
+      position:relative;
+      z-index:1;
+      margin:0 0 8px;
+      color:#ffd53b;
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:clamp(16px,1.8vw,30px);
+    }
+    .timer-title{
+      position:relative;
+      z-index:1;
+      margin:0 0 20px;
+      font-size:clamp(34px,5vw,86px);
+      line-height:.95;
+      text-transform:uppercase;
+      letter-spacing:-1px;
+      color:#fff;
+    }
+    #timerDisplay{
+      position:relative;
+      z-index:1;
+      display:block;
+      font-size:clamp(130px,28vw,500px);
+      line-height:.82;
+      margin:20px 0 30px;
+      font-weight:1000;
+      color:#f7ffe9;
+      font-variant-numeric:tabular-nums;
+      text-shadow:0 0 32px rgba(255,213,59,.20),0 18px 60px rgba(0,0,0,.45);
+      letter-spacing:-8px;
+    }
+    #timerStatus{
+      position:relative;
+      z-index:1;
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      border-radius:999px;
+      padding:16px 28px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+      font-style:normal;
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      font-size:clamp(22px,3vw,58px);
+    }
+    .running{background:rgba(54,214,111,.22)!important;color:#9dffbd!important;border-color:rgba(157,255,189,.34)!important}
+    .paused{color:#ffd53b!important}
+    .finished{background:#ff5959!important;color:#fff!important;border-color:transparent!important}
+    .danger #timerDisplay{color:#ffd53b;animation:pulseText .75s infinite}
+    .critical #timerDisplay,.finishedBody #timerDisplay{color:#ff5959;text-shadow:0 0 30px rgba(255,89,89,.35);animation:pulseText .45s infinite}
+    @media(max-width:760px){
+      .timer-page-main{min-height:calc(100vh - 190px)}
+      #timerDisplay{letter-spacing:-3px}
+    }
+  </style>
 </head>
-<body class="championship-body unified-dashboard vivid-dashboard" data-table-id="GERAL" data-table-name="Geral">
+<body class="championship-body unified-dashboard vivid-dashboard" data-table-id="CRONOMETRO" data-table-name="Cronômetro">
   <div class="arena-bg"></div>
 
   <header class="scoreboard-header">
@@ -20,59 +119,87 @@
       </div>
     </div>
 
-    <div class="live-pill"><span></span> AO VIVO</div>
+    <div class="live-pill"><span></span> CRONÔMETRO</div>
 
     <div class="header-actions">
-      <a href="pontuacao-mesa1.html">Mesa 1</a>
-      <a href="pontuacao-mesa2.html">Mesa 2</a>
+      <a href="dashboard.html">Dashboard</a>
       <a href="admin.html">Admin</a>
     </div>
   </header>
 
-  <main class="championship-dashboard unified-layout vivid-layout">
-    <section class="hero-scoreboard unified-hero vivid-hero">
-      <div class="hero-left">
-        <p class="eyebrow">CLASSIFICAÇÃO INTEGRADA</p>
-        <h1>DESEMPENHO DO ROBÔ</h1>
-      </div>
-
-      <div class="dual-timers-panel vivid-timers">
-        <div class="dual-timer-card" id="timerCardMesa1">
-          <span>MESA 1</span>
-          <strong id="timerMesa1">02:30</strong>
-          <em id="timerStatusMesa1">Parado</em>
-        </div>
-
-        <div class="dual-timer-card" id="timerCardMesa2">
-          <span>MESA 2</span>
-          <strong id="timerMesa2">02:30</strong>
-          <em id="timerStatusMesa2">Parado</em>
-        </div>
-      </div>
-    </section>
-<section class="rounds-scoreboard vivid-rounds dashboard-results-only">
-      <div class="panel-title">
-        <h2>RESULTADOS</h2>
-        <span>Teste e Round 1</span>
-      </div>
-
-      <div class="table-wrap">
-        <table class="champ-table">
-          <thead>
-            <tr>
-              <th>Equipe</th>
-              <th>Teste</th>
-              <th>Round 1</th>
-              <th>Pontuação pública</th>
-            </tr>
-          </thead>
-          <tbody id="roundsBody"></tbody>
-        </table>
-      </div>
+  <main class="timer-page-main">
+    <section class="giant-timer-panel" id="screen">
+      <p class="timer-eyebrow">Tempo oficial da partida</p>
+      <h1 class="timer-title">Cronômetro Geral</h1>
+      <strong id="timerDisplay">02:30</strong>
+      <em id="timerStatus" class="paused">Parado</em>
     </section>
   </main>
 
-  <script type="module" src="visual-settings.js?v=20260618-mesa2"></script>
-  <script type="module" src="dashboard.js?v=20260618-mesa2"></script>
+  <script type="module">
+    import { db } from './firebase-init.js';
+    import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const ROUND_DURATION = 150;
+    const display = document.getElementById('timerDisplay');
+    const status = document.getElementById('timerStatus');
+    const screen = document.getElementById('screen');
+
+    let state = { seconds: ROUND_DURATION, running: false, targetEndAt: null };
+
+    function clampSeconds(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return ROUND_DURATION;
+      return Math.max(0, Math.min(ROUND_DURATION, Math.round(n)));
+    }
+
+    function remainingSeconds() {
+      if (!state.running || !state.targetEndAt) return clampSeconds(state.seconds);
+      return clampSeconds(Math.ceil((Number(state.targetEndAt) - Date.now()) / 1000));
+    }
+
+    function format(seconds) {
+      const safe = clampSeconds(seconds);
+      const m = String(Math.floor(safe / 60)).padStart(2, '0');
+      const s = String(safe % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function render() {
+      const rem = remainingSeconds();
+      display.textContent = format(rem);
+      screen.classList.toggle('danger', rem <= 30 && rem > 10);
+      screen.classList.toggle('critical', rem <= 10 && rem > 0);
+      document.body.classList.toggle('finishedBody', rem === 0);
+
+      if (rem === 0) {
+        status.textContent = 'Tempo encerrado';
+        status.className = 'finished';
+      } else if (state.running) {
+        status.textContent = 'Em andamento';
+        status.className = 'running';
+      } else {
+        status.textContent = 'Parado';
+        status.className = 'paused';
+      }
+    }
+
+    onSnapshot(doc(db, 'timers', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        state = {
+          seconds: clampSeconds(data.seconds),
+          running: !!data.running,
+          targetEndAt: data.targetEndAt || null
+        };
+      } else {
+        state = { seconds: ROUND_DURATION, running: false, targetEndAt: null };
+      }
+      render();
+    });
+
+    setInterval(render, 200);
+    render();
+  </script>
 </body>
 </html>

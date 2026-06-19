@@ -1,48 +1,102 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro de Equipes</title>
-  <link rel="stylesheet" href="style.css?v=20260618-mesa2" />
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand"><div class="logo"><img src="assets/bioglow-logo.png" alt="BIOGLOW"></div><div><div>Cadastro de Equipes</div><small>Adicione as equipes da competição</small></div></div>
-    <nav class="nav">
-      <a href="index.html">Pontuação</a>
-      <a href="dashboard.html" target="_blank">Dashboard</a>
-    </nav>
-  </header>
+import { db } from './firebase-init.js';
+import {
+  collection,
+  onSnapshot,
+  query
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-  <main class="container">
-    <section class="card">
-      <h2>Nova equipe</h2>
-      <div class="grid-2">
-        <label>Número
-          <input id="numeroEquipe" placeholder="Ex: 01" />
-        </label>
-        <label>Nome da equipe
-          <input id="nomeEquipe" placeholder="Ex: AtomTech" />
-        </label>
-        <label>Robô
-          <input id="nomeRobo" placeholder="Opcional" />
-        </label>
-        <label>Escola/Turma
-          <input id="escolaEquipe" placeholder="Opcional" />
-        </label>
-      </div>
-      <button id="addEquipeBtn">Adicionar equipe</button>
-    </section>
+const roundsBody = document.getElementById('roundsBody');
+const rankingEl = document.getElementById('ranking');
+const lastResult = document.getElementById('lastResult');
+const teamCount = document.getElementById('teamCount');
 
-    <section class="card">
-      <h2>Equipes cadastradas</h2>
-      <div id="listaEquipes" class="team-list"></div>
-    </section>
-  </main>
+function normalizeRound(round) {
+  const r = String(round || '').trim().toUpperCase();
+  if (r === 'TESTE' || r === 'ROUND TESTE') return 'teste';
+  if (r === '1' || r === 'ROUND 1' || r === 'ROUND OFICIAL 1') return 'oficial1';
+  return r;
+}
 
-  <div id="toast" class="toast"></div>
-  <script type="module" src="visual-settings.js?v=20260618-mesa2"></script>
-  <script type="module" src="equipes.js"></script>
-</body>
-</html>
+function bestVisibleTableLabel(result) {
+  return result?.tableName ? ` • ${result.tableName}` : '';
+}
+
+function buildRanking(results) {
+  const byTeam = {};
+
+  results.forEach((r) => {
+    if (!r.teamId) return;
+
+    if (!byTeam[r.teamId]) {
+      byTeam[r.teamId] = {
+        name: r.teamName || 'Equipe sem nome',
+        teste: null,
+        oficial1: null,
+        publicScore: 0,
+        publicTable: '',
+        updated: r.createdAtLocal || ''
+      };
+    }
+
+    const roundKey = normalizeRound(r.round);
+    if (roundKey !== 'teste' && roundKey !== 'oficial1') return;
+
+    const current = byTeam[r.teamId][roundKey];
+    if (!current || Number(r.score || 0) > Number(current.score || 0)) {
+      byTeam[r.teamId][roundKey] = r;
+    }
+
+    if (new Date(r.createdAtLocal || 0) > new Date(byTeam[r.teamId].updated || 0)) {
+      byTeam[r.teamId].updated = r.createdAtLocal;
+    }
+  });
+
+  Object.values(byTeam).forEach((team) => {
+    const officialScore = Number(team.oficial1?.score || 0);
+    team.publicScore = officialScore;
+    team.publicTable = team.oficial1?.tableName || '';
+  });
+
+  return Object.values(byTeam).sort((a, b) => b.publicScore - a.publicScore || a.name.localeCompare(b.name));
+}
+
+function renderRoundsTable(ranking) {
+  if (!roundsBody) return;
+
+  roundsBody.innerHTML = ranking.length ? ranking.map((team) => {
+    const testeTable = bestVisibleTableLabel(team.teste);
+    const officialTable = bestVisibleTableLabel(team.oficial1);
+
+    return `<tr>
+      <td><strong>${team.name}</strong></td>
+      <td>${team.teste?.score ?? '-'}${testeTable ? `<small>${testeTable.replace(' • ', '')}</small>` : ''}</td>
+      <td>${team.oficial1?.score ?? '-'}${officialTable ? `<small>${officialTable.replace(' • ', '')}</small>` : ''}</td>
+      <td><span class="best-badge">${team.publicScore} pts</span></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="4" class="empty-state">Aguardando resultados...</td></tr>';
+}
+
+function renderRanking(ranking) {
+  if (teamCount) teamCount.textContent = `${ranking.length} equipes`;
+  if (!rankingEl) return;
+  rankingEl.innerHTML = '';
+}
+
+function renderLastVisibleResult() {
+  if (lastResult) lastResult.innerHTML = '';
+}
+
+onSnapshot(query(collection(db, 'results')), (snap) => {
+  const results = [];
+  snap.forEach((d) => results.push({ id: d.id, ...d.data() }));
+  results.sort((a, b) => new Date(b.createdAtLocal || 0) - new Date(a.createdAtLocal || 0));
+
+  const ranking = buildRanking(results);
+  const count = ranking.length;
+  document.body.classList.toggle('dashboard-many', count > 6);
+  document.body.classList.toggle('dashboard-lots', count > 10);
+
+  renderRanking(ranking);
+  renderRoundsTable(ranking);
+  renderLastVisibleResult();
+});
