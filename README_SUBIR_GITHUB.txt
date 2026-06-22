@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pontuação Mesa 1 - FLL 2026</title>
+  <title>Pontuação Mesa 2 - FLL 2026</title>
   <link rel="stylesheet" href="style.css?v=20260622-clean-v2">
 
 </head>
-<body data-table-id="mesa1" data-table-name="Mesa 1">
+<body data-table-id="mesa2" data-table-name="Mesa 2">
   <header class="topbar" id="mesaTopbar" style="display:none">
     <div class="brand">
       <div class="logo"><img src="assets/bioglow-logo.png?v=20260622-clean-v2" alt="BIOGLOW"></div>
       <div>
-        <div>Pontuação Desafio do Robô - Mesa 1</div>
+        <div>Pontuação Desafio do Robô - Mesa 2</div>
         <small>Microrregional FLL 2026</small>
       </div>
     </div>
@@ -31,11 +31,11 @@
   <main class="admin-login-wrap" id="mesaLoginScreen">
     <section class="card admin-login-card">
       <div class="admin-lock-icon">🔒</div>
-      <h1>Mesa 1</h1>
-      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 1.</p>
+      <h1>Mesa 2</h1>
+      <p class="muted">Digite a senha para acessar a tela de lançamento de pontuação da Mesa 2.</p>
 
       <div class="field">
-        <label>Senha da Mesa 1</label>
+        <label>Senha da Mesa 2</label>
         <input id="mesaPasswordInput" type="password" placeholder="Digite a senha">
       </div>
 
@@ -48,7 +48,7 @@
     <div class="grid">
       <section>
         <div class="card">
-          <h2>Lançamento de pontuação - Mesa 1</h2>
+          <h2>Lançamento de pontuação - Mesa 2</h2>
 
           <div class="setup">
             <div class="field">
@@ -79,7 +79,7 @@
         <div class="card judge-control-panel judge-control-horizontal">
           <div class="judge-context">
             <span>Mesa atual</span>
-            <strong id="currentTableDisplay">Mesa 1</strong>
+            <strong id="currentTableDisplay">Mesa 2</strong>
             <span>Equipe atual</span>
             <strong id="currentTeamDisplay">Selecione uma equipe</strong>
             <small id="currentRoundDisplay">Round Teste</small>
@@ -111,8 +111,8 @@
 
   <script>
     (function () {
-      const MESA_PASSWORD = 'mesa1@2026';
-      const AUTH_KEY = 'auth_mesa1';
+      const MESA_PASSWORD = 'mesa2@2026';
+      const AUTH_KEY = 'auth_mesa2';
 
       const loginScreen = document.getElementById('mesaLoginScreen');
       const topbar = document.getElementById('mesaTopbar');
