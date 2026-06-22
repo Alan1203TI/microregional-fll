@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cronômetro Oficial - FLL 2026</title>
+  <link rel="stylesheet" href="style.css?v=20260619-ajustes">
+</head>
+<body class="championship-body timer-page">
+  <div class="arena-bg"></div>
+
+  <header class="scoreboard-header">
+    <div class="event-brand">
+      <div class="logo-card">
+        <img src="./assets/bioglow-logo.png?v=4" alt="BIOGLOW">
+      </div>
+      <div>
+        <strong>MICRORREGIONAL MG 2026</strong>
+        <span>Desempenho do Robô • BIOGLOW</span>
+      </div>
+    </div>
+
+    <div class="live-pill"><span></span> CRONÔMETRO OFICIAL</div>
+
+    <div class="header-actions">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </header>
+
+  <main class="official-timer-layout">
+    <section class="official-timer-card">
+      <p class="eyebrow">TEMPO DE ROUND</p>
+      <h1>CRONÔMETRO OFICIAL</h1>
+      <div class="official-timer-display" id="officialTimerDisplay">02:30</div>
+      <div class="official-timer-status" id="officialTimerStatus">Parado</div>
+      <p class="muted">O controle deste cronômetro é feito pela página Admin.</p>
+    </section>
+  </main>
+
+  <script type="module" src="visual-settings.js?v=20260619-ajustes"></script>
+  <script type="module" src="cronometro.js?v=20260619-ajustes"></script>
+</body>
+</html>
