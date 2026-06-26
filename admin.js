@@ -137,7 +137,7 @@ function buildAdminRanking() {
 
     if (r2Score > r1Score) {
       team.best = r2Score;
-      team.bestRound = 'Round 2';
+      team.bestRound = 'Round Oficial 2';
       team.bestTable = team.r2?.tableName || '';
     } else {
       team.best = r1Score;
