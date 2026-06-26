@@ -109,57 +109,74 @@
   <div class="toast" id="toast"></div>
 
 
-  <script>
-    (function () {
-      const MESA_PASSWORD = 'mesa2@2026';
-      const AUTH_KEY = 'auth_mesa2';
+  <script type="module">
+    import { db } from './firebase-init.js';
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-      const loginScreen = document.getElementById('mesaLoginScreen');
-      const topbar = document.getElementById('mesaTopbar');
-      const content = document.getElementById('mesaContent');
-      const footer = document.getElementById('mesaFooter');
-      const input = document.getElementById('mesaPasswordInput');
-      const button = document.getElementById('mesaLoginBtn');
-      const error = document.getElementById('mesaLoginError');
+    const TABLE_ID = document.body.dataset.tableId || 'mesa2';
+    const DEFAULT_PASSWORDS = { mesa1: 'mesa1@2026', mesa2: 'mesa2@2026' };
+    const AUTH_KEY = `auth_${TABLE_ID}`;
 
-      function showMesa() {
-        if (loginScreen) loginScreen.style.display = 'none';
-        if (topbar) topbar.style.display = '';
-        if (content) content.style.display = '';
-        if (footer) footer.style.display = '';
-      }
+    const loginScreen = document.getElementById('mesaLoginScreen');
+    const topbar = document.getElementById('mesaTopbar');
+    const content = document.getElementById('mesaContent');
+    const footer = document.getElementById('mesaFooter');
+    const input = document.getElementById('mesaPasswordInput');
+    const button = document.getElementById('mesaLoginBtn');
+    const error = document.getElementById('mesaLoginError');
 
-      function showLogin() {
-        if (loginScreen) loginScreen.style.display = '';
-        if (topbar) topbar.style.display = 'none';
-        if (content) content.style.display = 'none';
-        if (footer) footer.style.display = 'none';
-        setTimeout(() => input && input.focus(), 100);
-      }
+    let currentPassword = DEFAULT_PASSWORDS[TABLE_ID] || 'mesa2@2026';
 
-      function handleLogin() {
-        if (input && input.value === MESA_PASSWORD) {
-          sessionStorage.setItem(AUTH_KEY, 'ok');
-          if (error) error.textContent = '';
-          showMesa();
-          return;
+    function showMesa() {
+      if (loginScreen) loginScreen.style.display = 'none';
+      if (topbar) topbar.style.display = '';
+      if (content) content.style.display = '';
+      if (footer) footer.style.display = '';
+    }
+
+    function showLogin() {
+      if (loginScreen) loginScreen.style.display = '';
+      if (topbar) topbar.style.display = 'none';
+      if (content) content.style.display = 'none';
+      if (footer) footer.style.display = 'none';
+      setTimeout(() => input && input.focus(), 100);
+    }
+
+    async function loadPassword() {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'tablePasswords'));
+        if (snap.exists()) {
+          const data = snap.data();
+          currentPassword = data[TABLE_ID] || currentPassword;
         }
+      } catch (e) {
+        console.warn('Não foi possível carregar senha da mesa. Usando senha padrão.', e);
+      }
+    }
 
-        if (error) error.textContent = 'Senha incorreta. Tente novamente.';
-        if (input) {
-          input.value = '';
-          input.focus();
-        }
+    function handleLogin() {
+      if (input && input.value === currentPassword) {
+        sessionStorage.setItem(AUTH_KEY, currentPassword);
+        if (error) error.textContent = '';
+        showMesa();
+        return;
       }
 
-      if (button) button.addEventListener('click', handleLogin);
-      if (input) input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') handleLogin();
-      });
+      if (error) error.textContent = 'Senha incorreta. Tente novamente.';
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+    }
 
-      if (sessionStorage.getItem(AUTH_KEY) === 'ok') showMesa();
-      else showLogin();
-    })();
+    if (button) button.addEventListener('click', handleLogin);
+    if (input) input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') handleLogin();
+    });
+
+    await loadPassword();
+    if (sessionStorage.getItem(AUTH_KEY) === currentPassword) showMesa();
+    else showLogin();
   </script>
 
   <script type="module" src="visual-settings.js?v=20260619-ajustes"></script>

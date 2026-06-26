@@ -32,6 +32,7 @@ let unsubTeams = null;
 let unsubResults = null;
 let unsubVisual = null;
 let unsubGlobalTimer = null;
+let unsubTablePasswords = null;
 let adminTimerRenderInterval = null;
 let globalTimerState = { seconds: ROUND_DURATION, running: false, targetEndAt: null };
 
@@ -76,6 +77,7 @@ function logout() {
   if (unsubResults) unsubResults();
   if (unsubVisual) unsubVisual();
   if (unsubGlobalTimer) unsubGlobalTimer();
+  if (unsubTablePasswords) unsubTablePasswords();
   clearInterval(adminTimerRenderInterval);
   showLogin();
 }
@@ -276,6 +278,25 @@ async function resetVisualSettings() {
   await saveVisualSettings();
 }
 
+async function saveTablePasswords() {
+  const mesa1Password = $('mesa1PasswordInput')?.value.trim();
+  const mesa2Password = $('mesa2PasswordInput')?.value.trim();
+
+  if (!mesa1Password || !mesa2Password) {
+    toast('Preencha a senha da Mesa 1 e da Mesa 2.');
+    return;
+  }
+
+  await setDoc(doc(db, 'settings', 'tablePasswords'), {
+    mesa1: mesa1Password,
+    mesa2: mesa2Password,
+    updatedAt: serverTimestamp(),
+    updatedAtLocal: new Date().toISOString()
+  }, { merge: true });
+
+  toast('Senhas das mesas salvas.');
+}
+
 
 function getGlobalRemainingSeconds() {
   if (!globalTimerState.running || !globalTimerState.targetEndAt) {
@@ -357,6 +378,7 @@ async function resetGlobalTimer() {
 
 function listenGlobalTimer() {
   if (unsubGlobalTimer) unsubGlobalTimer();
+  if (unsubTablePasswords) unsubTablePasswords();
 
   unsubGlobalTimer = onSnapshot(doc(db, 'timers', 'global'), (snap) => {
     if (snap.exists()) {
@@ -408,6 +430,7 @@ function initAdmin() {
   listenGlobalTimer();
   $('saveVisualBtn').onclick = saveVisualSettings;
   $('resetVisualBtn').onclick = resetVisualSettings;
+  $('saveTablePasswordsBtn').onclick = saveTablePasswords;
 
   unsubTeams = onSnapshot(query(collection(db, 'teams')), (snap) => {
     const teams = [];
@@ -447,6 +470,12 @@ function initAdmin() {
     const data = snap.exists() ? snap.data() : {};
     $('bannerUrlInput').value = data.bannerUrl || DEFAULT_BANNER;
     $('backgroundUrlInput').value = data.backgroundUrl || DEFAULT_BACKGROUND;
+  });
+
+  unsubTablePasswords = onSnapshot(doc(db, 'settings', 'tablePasswords'), (snap) => {
+    const data = snap.exists() ? snap.data() : {};
+    $('mesa1PasswordInput').value = data.mesa1 || 'mesa1@2026';
+    $('mesa2PasswordInput').value = data.mesa2 || 'mesa2@2026';
   });
 }
 
