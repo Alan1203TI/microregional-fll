@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard Geral - FLL 2026</title>
-  <link rel="stylesheet" href="style.css?v=20260619-ajustes">
+  <title>Placar ao Vivo - FLL 2026</title>
+  <link rel="stylesheet" href="style.css?v=20260701-placar-tv">
 </head>
 <body class="championship-body unified-dashboard vivid-dashboard" data-table-id="GERAL" data-table-name="Geral">
   <div class="arena-bg"></div>
@@ -29,23 +29,29 @@
     </div>
   </header>
 
-  <main class="championship-dashboard unified-layout vivid-layout">
-    <section class="hero-scoreboard unified-hero vivid-hero">
-      <div class="hero-left">
-        <p class="eyebrow">CLASSIFICAÇÃO INTEGRADA</p>
+  <main class="championship-dashboard unified-layout vivid-layout tv-scoreboard-layout">
+    <section class="tv-scoreboard-titlebar">
+      <div class="tv-title-left">
+        <p class="eyebrow">DASHBOARD AO VIVO</p>
         <h1>DESEMPENHO DO ROBÔ</h1>
       </div>
+      <div class="tv-title-right">
+        <strong id="dashboardClock">--:--:--</strong>
+        <span>Atualização automática</span>
+      </div>
     </section>
-<section class="rounds-scoreboard vivid-rounds dashboard-results-only">
-      <div class="panel-title">
+
+    <section class="rounds-scoreboard vivid-rounds dashboard-results-only tv-scoreboard-panel">
+      <div class="panel-title tv-panel-title">
         <h2>RESULTADOS</h2>
         <span>Round Teste e Round Oficial 1</span>
       </div>
 
-      <div class="table-wrap">
-        <table class="champ-table">
+      <div class="table-wrap tv-table-wrap">
+        <table class="champ-table tv-score-table">
           <thead>
             <tr>
+              <th class="pos-col">#</th>
               <th>Equipe</th>
               <th>Round Teste</th>
               <th>Round Oficial 1</th>
@@ -58,6 +64,6 @@
   </main>
 
   <script type="module" src="visual-settings.js?v=20260619-ajustes"></script>
-  <script type="module" src="dashboard.js?v=20260619-ajustes"></script>
+  <script type="module" src="dashboard.js?v=20260701-placar-tv"></script>
 </body>
 </html>

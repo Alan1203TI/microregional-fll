@@ -2196,3 +2196,277 @@ body.dashboard-lots.championship-body.vivid-dashboard .dashboard-results-only .c
   padding:4px 8px!important;
   font-size:clamp(11px,.9vw,15px)!important;
 }
+
+/* =========================================================
+   DASHBOARD ESTILO PLACAR DE TV
+   Mantém a identidade BIOGLOW do site, mas aumenta leitura em televisão.
+   ========================================================= */
+.championship-body.vivid-dashboard .tv-scoreboard-layout{
+  height:calc(100vh - 86px)!important;
+  width:min(1920px,98vw)!important;
+  grid-template-rows:minmax(145px,18vh) minmax(0,1fr)!important;
+  gap:16px!important;
+  margin:12px auto 0!important;
+}
+
+.tv-scoreboard-titlebar{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  align-items:center;
+  gap:22px;
+  min-height:145px;
+  border:2px solid rgba(157,255,189,.30);
+  border-radius:30px;
+  padding:24px 34px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 95% 0%,rgba(255,213,59,.18),transparent 34%),
+    linear-gradient(135deg,rgba(13,93,55,.88),rgba(3,45,29,.72)),
+    rgba(255,255,255,.08);
+  box-shadow:0 26px 80px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.10);
+}
+
+.tv-scoreboard-titlebar .eyebrow{
+  margin:0 0 8px!important;
+  color:#ffd53b!important;
+  font-size:clamp(18px,1.6vw,30px)!important;
+  font-weight:1000!important;
+  letter-spacing:3px!important;
+  text-transform:uppercase!important;
+}
+
+.tv-scoreboard-titlebar h1{
+  margin:0!important;
+  font-size:clamp(54px,5.8vw,112px)!important;
+  line-height:.86!important;
+  text-transform:uppercase!important;
+  letter-spacing:-3px!important;
+  color:#faffee!important;
+  text-shadow:0 8px 30px rgba(0,0,0,.34)!important;
+}
+
+.tv-title-right{
+  justify-self:end;
+  text-align:right;
+  padding:16px 20px;
+  border-radius:24px;
+  border:1px solid rgba(255,213,59,.35);
+  background:rgba(0,0,0,.18);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+.tv-title-right strong{
+  display:block;
+  color:#fffdf4;
+  font-size:clamp(34px,3.1vw,58px);
+  line-height:1;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+}
+
+.tv-title-right span{
+  display:block;
+  margin-top:8px;
+  color:#9dffbd;
+  font-size:14px;
+  font-weight:1000;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.dashboard-results-only.tv-scoreboard-panel{
+  padding:0!important;
+  border-radius:30px!important;
+  border:2px solid rgba(255,213,59,.42)!important;
+  background:
+    linear-gradient(180deg,rgba(255,213,59,.08),transparent 24%),
+    linear-gradient(180deg,rgba(6,77,43,.82),rgba(3,36,24,.74))!important;
+  box-shadow:0 28px 86px rgba(0,0,0,.38), 0 0 44px rgba(255,213,59,.10)!important;
+}
+
+.dashboard-results-only .tv-panel-title{
+  margin:0!important;
+  padding:16px 24px 12px!important;
+  border-bottom:2px solid rgba(255,213,59,.28);
+}
+
+.dashboard-results-only .tv-panel-title h2{
+  font-size:clamp(30px,3.2vw,58px)!important;
+  color:#ffd53b!important;
+  font-weight:1000!important;
+}
+
+.dashboard-results-only .tv-panel-title span{
+  font-size:clamp(14px,1.2vw,22px)!important;
+  font-weight:1000!important;
+}
+
+.dashboard-results-only .tv-table-wrap{
+  height:calc(100% - 86px)!important;
+  padding:0 18px 18px;
+  overflow:hidden!important;
+}
+
+.tv-score-table{
+  width:100%;
+  height:100%;
+  border-collapse:separate!important;
+  border-spacing:0 8px!important;
+  table-layout:fixed;
+}
+
+.tv-score-table th{
+  height:72px;
+  padding:0 18px!important;
+  background:linear-gradient(180deg,rgba(36,139,85,.95),rgba(13,93,55,.92));
+  color:#fffdf4!important;
+  font-size:clamp(26px,2.7vw,52px)!important;
+  font-weight:1000!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  letter-spacing:.5px!important;
+  border-top:2px solid rgba(157,255,189,.25);
+  border-bottom:2px solid rgba(255,213,59,.26);
+}
+
+.tv-score-table th:first-child{
+  border-radius:22px 0 0 22px;
+  width:110px;
+}
+.tv-score-table th:nth-child(2){width:47%;}
+.tv-score-table th:last-child{border-radius:0 22px 22px 0;}
+
+.tv-score-table td{
+  height:calc((100vh - 360px) / 8);
+  min-height:68px;
+  padding:8px 18px!important;
+  background:rgba(255,255,255,.105)!important;
+  border-top:1px solid rgba(255,255,255,.13);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  color:#fffdf4!important;
+  vertical-align:middle!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.16);
+}
+
+.tv-score-table tr.rank-1 td{
+  background:linear-gradient(90deg,rgba(255,213,59,.24),rgba(255,255,255,.12))!important;
+  border-color:rgba(255,213,59,.42);
+}
+.tv-score-table tr.rank-2 td{
+  background:linear-gradient(90deg,rgba(220,235,255,.16),rgba(255,255,255,.10))!important;
+}
+.tv-score-table tr.rank-3 td{
+  background:linear-gradient(90deg,rgba(205,127,50,.16),rgba(255,255,255,.10))!important;
+}
+
+.tv-score-table td:first-child{
+  border-radius:18px 0 0 18px;
+}
+.tv-score-table td:last-child{
+  border-radius:0 18px 18px 0;
+}
+
+.tv-score-table .score-pos{
+  width:110px;
+  text-align:center!important;
+  color:#9dffbd!important;
+  font-size:clamp(34px,3.6vw,70px)!important;
+  font-weight:1000!important;
+  text-shadow:0 0 20px rgba(157,255,189,.24);
+}
+
+.tv-score-table .score-team strong{
+  display:block;
+  color:#ffffff!important;
+  font-size:clamp(32px,3.4vw,68px)!important;
+  font-weight:1000!important;
+  line-height:.96!important;
+  text-transform:uppercase!important;
+  letter-spacing:-1px!important;
+  text-shadow:0 5px 20px rgba(0,0,0,.30);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.tv-score-table .score-points{
+  text-align:center!important;
+  color:#ffd53b!important;
+  font-size:clamp(46px,5vw,96px)!important;
+  font-weight:1000!important;
+  line-height:.92!important;
+  font-variant-numeric:tabular-nums!important;
+  text-shadow:0 0 28px rgba(255,213,59,.24);
+}
+
+.tv-score-table .score-points small{
+  display:block!important;
+  margin-top:7px!important;
+  color:#dfffe7!important;
+  font-size:clamp(10px,1vw,18px)!important;
+  font-weight:900!important;
+  line-height:1!important;
+  text-shadow:none!important;
+  text-transform:uppercase;
+}
+
+.dashboard-many .tv-score-table th{
+  height:58px;
+  font-size:clamp(20px,2.1vw,38px)!important;
+}
+.dashboard-many .tv-score-table td{
+  min-height:54px;
+  height:calc((100vh - 340px) / 10);
+}
+.dashboard-many .tv-score-table .score-pos{
+  font-size:clamp(26px,2.8vw,50px)!important;
+}
+.dashboard-many .tv-score-table .score-team strong{
+  font-size:clamp(24px,2.5vw,44px)!important;
+}
+.dashboard-many .tv-score-table .score-points{
+  font-size:clamp(34px,3.6vw,62px)!important;
+}
+
+.dashboard-lots .tv-scoreboard-titlebar{
+  min-height:110px;
+  padding:16px 24px;
+}
+.dashboard-lots .tv-scoreboard-titlebar h1{
+  font-size:clamp(38px,4.2vw,72px)!important;
+}
+.dashboard-lots .tv-scoreboard-layout{
+  grid-template-rows:minmax(110px,14vh) minmax(0,1fr)!important;
+}
+.dashboard-lots .tv-score-table{
+  border-spacing:0 5px!important;
+}
+.dashboard-lots .tv-score-table th{
+  height:44px;
+  font-size:clamp(15px,1.6vw,28px)!important;
+}
+.dashboard-lots .tv-score-table td{
+  padding:4px 12px!important;
+  min-height:38px;
+  height:calc((100vh - 285px) / 14);
+}
+.dashboard-lots .tv-score-table .score-pos{
+  font-size:clamp(18px,2vw,34px)!important;
+}
+.dashboard-lots .tv-score-table .score-team strong{
+  font-size:clamp(16px,1.8vw,30px)!important;
+}
+.dashboard-lots .tv-score-table .score-points{
+  font-size:clamp(22px,2.5vw,44px)!important;
+}
+.dashboard-lots .tv-score-table .score-points small{
+  display:none!important;
+}
+
+@media(max-width:900px){
+  .championship-body.vivid-dashboard .tv-scoreboard-layout{height:auto!important;overflow:visible!important;grid-template-rows:auto!important;}
+  .tv-scoreboard-titlebar{grid-template-columns:1fr;min-height:auto;}
+  .tv-title-right{justify-self:stretch;text-align:left;}
+  .dashboard-results-only .tv-table-wrap{height:auto!important;overflow:auto!important;}
+  .tv-score-table{min-width:900px;height:auto;}
+}

@@ -12,6 +12,7 @@ const rankingEl = document.getElementById('ranking');
 const roundsBody = document.getElementById('roundsBody');
 const lastResult = document.getElementById('lastResult');
 const teamCount = document.getElementById('teamCount');
+const dashboardClock = document.getElementById('dashboardClock');
 
 const timerElements = {
   mesa1: {
@@ -110,6 +111,15 @@ function renderAllTimers() {
   renderTimer('mesa2');
 }
 
+
+function updateDashboardClock() {
+  if (!dashboardClock) return;
+  dashboardClock.textContent = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+}
+
+updateDashboardClock();
+setInterval(updateDashboardClock, 1000);
+
 function listenTimer(tableId) {
   onSnapshot(doc(db, 'timers', tableId), (snap) => {
     if (snap.exists()) {
@@ -199,14 +209,16 @@ function renderRoundsTable(ranking) {
   roundsBody.innerHTML = ranking
     .slice()
     .sort((a, b) => Number(b.publicScore || 0) - Number(a.publicScore || 0) || a.name.localeCompare(b.name))
-    .map((team) => {
+    .map((team, index) => {
       const testeTable = bestVisibleTableLabel(team.TESTE);
       const r1Table = bestVisibleTableLabel(team['1']);
+      const pos = `${index + 1}º`;
 
-      return `<tr>
-        <td><strong>${team.name}</strong></td>
-        <td>${team.TESTE?.score ?? '-'}${testeTable ? `<small>${testeTable.replace(' • ', '')}</small>` : ''}</td>
-        <td>${team['1']?.score ?? '-'}${r1Table ? `<small>${r1Table.replace(' • ', '')}</small>` : ''}</td>
+      return `<tr class="score-row rank-${index + 1}">
+        <td class="score-pos">${pos}</td>
+        <td class="score-team"><strong>${team.name}</strong></td>
+        <td class="score-points">${team.TESTE?.score ?? '-'}${testeTable ? `<small>${testeTable.replace(' • ', '')}</small>` : ''}</td>
+        <td class="score-points main-score">${team['1']?.score ?? '-'}${r1Table ? `<small>${r1Table.replace(' • ', '')}</small>` : ''}</td>
       </tr>`;
     }).join('');
 }
