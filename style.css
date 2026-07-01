@@ -2536,3 +2536,99 @@ body.dashboard-lots.championship-body.vivid-dashboard .tv-score-table .score-poi
   display:block!important;
   font-size:clamp(10px,1vw,18px)!important;
 }
+
+/* =========================================================
+   AJUSTE TV - EQUIPE MENOR E PONTUAÇÃO EM DESTAQUE
+   ========================================================= */
+.tv-scoreboard-layout.dashboard-results-only,
+.dashboard-results-only{
+  max-width:none!important;
+  width:100%!important;
+}
+.tv-scoreboard-panel .tv-table-wrap,
+.dashboard-results-only .table-wrap{
+  height:calc(100% - 82px)!important;
+}
+.tv-score-table{
+  table-layout:fixed!important;
+  width:100%!important;
+}
+.tv-score-table .pos-col,
+.tv-score-table .score-pos{
+  width:7%!important;
+}
+.tv-score-table th:nth-child(2),
+.tv-score-table td.score-team{
+  width:45%!important;
+}
+.tv-score-table th:nth-child(3),
+.tv-score-table th:nth-child(4),
+.tv-score-table td.score-points{
+  width:24%!important;
+}
+.dashboard-results-only .champ-table th,
+.tv-score-table th{
+  font-size:clamp(20px,2vw,34px)!important;
+  font-weight:1000!important;
+  letter-spacing:1px!important;
+  padding:0 18px 10px!important;
+}
+.dashboard-results-only .champ-table td,
+.tv-score-table td{
+  padding:clamp(12px,1.8vh,24px) 18px!important;
+  vertical-align:middle!important;
+}
+.tv-score-table td.score-pos{
+  font-size:clamp(26px,2.8vw,46px)!important;
+  font-weight:1000!important;
+  color:#9dffbd!important;
+  text-align:center!important;
+}
+.tv-score-table td.score-team strong{
+  display:block!important;
+  font-size:clamp(34px,4vw,64px)!important;
+  line-height:.95!important;
+  font-weight:1000!important;
+  color:#fff!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.tv-score-table td.score-points{
+  font-size:clamp(72px,7vw,124px)!important;
+  line-height:.82!important;
+  font-weight:1000!important;
+  color:#ffd53b!important;
+  text-align:center!important;
+  text-shadow:0 8px 26px rgba(0,0,0,.34)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+.tv-score-table td.score-points small{
+  display:block!important;
+  margin-top:10px!important;
+  font-size:clamp(16px,1.6vw,26px)!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  color:#fff!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+.dashboard-many .tv-score-table td.score-team strong{
+  font-size:clamp(28px,3.2vw,50px)!important;
+}
+.dashboard-many .tv-score-table td.score-points{
+  font-size:clamp(58px,5.8vw,96px)!important;
+}
+.dashboard-many .tv-score-table td.score-points small{
+  font-size:clamp(13px,1.3vw,20px)!important;
+}
+.dashboard-lots .tv-score-table td.score-team strong{
+  font-size:clamp(22px,2.5vw,38px)!important;
+}
+.dashboard-lots .tv-score-table td.score-points{
+  font-size:clamp(44px,4.6vw,74px)!important;
+}
+.dashboard-lots .tv-score-table td.score-points small{
+  font-size:clamp(11px,1.1vw,16px)!important;
+}
