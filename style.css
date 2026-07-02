@@ -2666,3 +2666,96 @@ body.dashboard-lots.championship-body.vivid-dashboard .tv-score-table td.score-t
 body.dashboard-lots.championship-body.vivid-dashboard .tv-score-table td.score-points{
   font-size:clamp(49px,4.8vw,78px)!important;
 }
+
+/* Ajuste automático do dashboard para TV: todas as equipes visíveis sem rolagem */
+.championship-body.vivid-dashboard,
+.dashboard-body.vivid-dashboard{
+  overflow:hidden!important;
+}
+.vivid-layout{
+  grid-template-rows:var(--dash-hero-height,145px) minmax(0,1fr) var(--dash-rounds-height,minmax(120px,25vh));
+}
+.vivid-ranking{
+  gap:var(--rank-gap,8px)!important;
+  grid-template-rows:repeat(var(--dashboard-team-count,1), minmax(0,1fr));
+  align-content:stretch!important;
+}
+.vivid-ranking .champ-rank-row{
+  height:100%;
+  padding:var(--rank-row-padding,10px 14px)!important;
+  grid-template-columns:var(--rank-pos-width,70px) minmax(0,1fr) var(--rank-score-width,130px)!important;
+  gap:var(--rank-row-gap,12px)!important;
+  overflow:hidden;
+}
+.vivid-ranking .champ-pos{
+  font-size:var(--rank-pos-size,34px)!important;
+  line-height:1!important;
+}
+.vivid-ranking .champ-team{
+  min-width:0;
+  overflow:hidden;
+}
+.vivid-ranking .champ-team strong{
+  display:block;
+  font-size:var(--rank-name-size,38px)!important;
+  line-height:var(--rank-name-line,.98)!important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.vivid-ranking .champ-team small{
+  font-size:var(--rank-small-size,12px)!important;
+  margin:var(--rank-small-margin,2px 0 6px)!important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.vivid-ranking .score-bar{
+  height:var(--rank-bar-height,7px)!important;
+  margin-top:var(--rank-bar-margin,0)!important;
+}
+.vivid-ranking .champ-points strong{
+  font-size:var(--rank-score-size,58px)!important;
+  line-height:.9!important;
+  letter-spacing:-1px;
+}
+.vivid-ranking .champ-points span{
+  font-size:var(--rank-score-label-size,11px)!important;
+}
+.vivid-rounds{
+  padding:var(--rounds-padding,12px 18px)!important;
+}
+.vivid-rounds .table-wrap{
+  overflow:hidden!important;
+}
+.vivid-rounds .champ-table{
+  border-spacing:0 var(--round-row-gap,5px)!important;
+}
+.vivid-rounds .champ-table th{
+  font-size:var(--round-th-size,10px)!important;
+  padding:0 8px 2px!important;
+}
+.vivid-rounds .champ-table td{
+  font-size:var(--round-td-size,14px)!important;
+  padding:var(--round-td-padding,7px 10px)!important;
+  line-height:1.05!important;
+}
+.vivid-rounds .champ-table small{
+  font-size:var(--round-small-size,9px)!important;
+}
+.dashboard-compact .vivid-hero .hero-left p:last-child,
+.dashboard-dense .vivid-hero .hero-left p:last-child,
+.dashboard-ultra .vivid-hero .hero-left p:last-child{
+  display:none;
+}
+.dashboard-dense .vivid-ranking .champ-team small,
+.dashboard-ultra .vivid-ranking .champ-team small{
+  display:none!important;
+}
+.dashboard-dense .vivid-ranking .score-bar,
+.dashboard-ultra .vivid-ranking .score-bar{
+  display:none!important;
+}
+.dashboard-ultra .vivid-rounds .panel-title span{
+  display:none;
+}

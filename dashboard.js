@@ -272,6 +272,58 @@ function buildRanking(results) {
   return Object.values(byTeam).sort((a, b) => b.publicScore - a.publicScore || a.name.localeCompare(b.name));
 }
 
+
+
+function applyAdaptiveDashboard(count) {
+  const root = document.documentElement;
+  const body = document.body;
+  const safeCount = Math.max(1, Number(count) || 1);
+
+  root.style.setProperty('--dashboard-team-count', String(safeCount));
+
+  const tiers = [
+    { max: 6,  cls: 'normal',  hero: '145px', rounds: 'minmax(120px,25vh)', gap: '8px', rowPad: '10px 14px', posW: '70px', scoreW: '142px', rowGap: '12px', pos: '34px', name: '38px', score: '58px', small: '12px', bar: '7px', scoreLabel: '11px', roundTd: '14px', roundTh: '10px', roundPad: '7px 10px', roundGap: '5px' },
+    { max: 8,  cls: 'compact', hero: '125px', rounds: 'minmax(105px,22vh)', gap: '6px', rowPad: '7px 12px', posW: '56px', scoreW: '118px', rowGap: '10px', pos: '28px', name: '31px', score: '46px', small: '10px', bar: '5px', scoreLabel: '10px', roundTd: '12px', roundTh: '9px', roundPad: '5px 8px', roundGap: '4px' },
+    { max: 10, cls: 'compact', hero: '110px', rounds: 'minmax(92px,19vh)',  gap: '5px', rowPad: '6px 10px', posW: '48px', scoreW: '104px', rowGap: '8px',  pos: '24px', name: '26px', score: '39px', small: '9px',  bar: '4px', scoreLabel: '9px',  roundTd: '11px', roundTh: '8px', roundPad: '4px 7px', roundGap: '3px' },
+    { max: 14, cls: 'dense',   hero: '92px',  rounds: 'minmax(78px,16vh)',  gap: '4px', rowPad: '5px 9px',  posW: '40px', scoreW: '88px',  rowGap: '7px',  pos: '20px', name: '21px', score: '32px', small: '8px',  bar: '0px', scoreLabel: '8px',  roundTd: '9px',  roundTh: '7px', roundPad: '3px 6px', roundGap: '2px' },
+    { max: 18, cls: 'ultra',   hero: '74px',  rounds: 'minmax(62px,13vh)',  gap: '3px', rowPad: '3px 7px',  posW: '34px', scoreW: '74px',  rowGap: '6px',  pos: '17px', name: '17px', score: '26px', small: '0px',  bar: '0px', scoreLabel: '7px',  roundTd: '8px',  roundTh: '6px', roundPad: '2px 5px', roundGap: '1px' },
+    { max: Infinity, cls: 'ultra', hero: '62px', rounds: '52px',            gap: '2px', rowPad: '2px 6px',  posW: '30px', scoreW: '64px',  rowGap: '5px',  pos: '15px', name: '15px', score: '22px', small: '0px',  bar: '0px', scoreLabel: '6px',  roundTd: '7px',  roundTh: '6px', roundPad: '1px 4px', roundGap: '1px' }
+  ];
+
+  const tier = tiers.find(t => safeCount <= t.max) || tiers[tiers.length - 1];
+
+  body.classList.toggle('dashboard-compact', tier.cls === 'compact');
+  body.classList.toggle('dashboard-dense', tier.cls === 'dense');
+  body.classList.toggle('dashboard-ultra', tier.cls === 'ultra');
+
+  const vars = {
+    '--dash-hero-height': tier.hero,
+    '--dash-rounds-height': tier.rounds,
+    '--rank-gap': tier.gap,
+    '--rank-row-padding': tier.rowPad,
+    '--rank-pos-width': tier.posW,
+    '--rank-score-width': tier.scoreW,
+    '--rank-row-gap': tier.rowGap,
+    '--rank-pos-size': tier.pos,
+    '--rank-name-size': tier.name,
+    '--rank-score-size': tier.score,
+    '--rank-small-size': tier.small,
+    '--rank-bar-height': tier.bar,
+    '--rank-score-label-size': tier.scoreLabel,
+    '--round-td-size': tier.roundTd,
+    '--round-th-size': tier.roundTh,
+    '--round-td-padding': tier.roundPad,
+    '--round-row-gap': tier.roundGap
+  };
+
+  Object.entries(vars).forEach(([key, value]) => root.style.setProperty(key, value));
+}
+
+window.addEventListener('resize', () => {
+  const count = Number(document.documentElement.style.getPropertyValue('--dashboard-team-count')) || 1;
+  applyAdaptiveDashboard(count);
+});
+
 function renderRanking(ranking) {
   if (teamCount) teamCount.textContent = `${ranking.length} equipes`;
 
@@ -346,6 +398,7 @@ onSnapshot(query(collection(db, 'results')), (snap) => {
   rankingEl?.classList.toggle('many-teams', count > 6);
   rankingEl?.classList.toggle('lots-teams', count > 10);
 
+  applyAdaptiveDashboard(count);
   renderRanking(ranking);
   renderRoundsTable(ranking);
   renderLastVisibleResult(results);
