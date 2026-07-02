@@ -2759,3 +2759,110 @@ body.dashboard-lots.championship-body.vivid-dashboard .tv-score-table td.score-p
 .dashboard-ultra .vivid-rounds .panel-title span{
   display:none;
 }
+
+
+/* =========================================================
+   CORREÇÃO FINAL - PLACAR TV AUTOAJUSTÁVEL SEM SUMIR EQUIPES
+   ========================================================= */
+body.championship-body.vivid-dashboard{
+  height:100vh!important;
+  max-height:100vh!important;
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .scoreboard-header{
+  flex-shrink:0!important;
+}
+body.championship-body.vivid-dashboard .tv-scoreboard-layout{
+  height:calc(100vh - 92px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  padding:clamp(8px,1.2vh,16px)!important;
+  gap:clamp(6px,1vh,12px)!important;
+}
+body.championship-body.vivid-dashboard .tv-scoreboard-titlebar{
+  min-height:0!important;
+  padding:clamp(8px,1.2vh,16px) clamp(14px,2vw,28px)!important;
+}
+body.championship-body.vivid-dashboard .tv-scoreboard-titlebar h1{
+  font-size:clamp(30px,4vw,64px)!important;
+  line-height:.9!important;
+}
+body.championship-body.vivid-dashboard .dashboard-results-only.tv-scoreboard-panel{
+  min-height:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  padding:clamp(8px,1.1vh,16px)!important;
+}
+body.championship-body.vivid-dashboard .tv-panel-title{
+  flex:0 0 auto!important;
+  margin-bottom:clamp(4px,.8vh,10px)!important;
+}
+body.championship-body.vivid-dashboard .tv-panel-title h2{
+  font-size:clamp(18px,2.4vw,34px)!important;
+  line-height:1!important;
+}
+body.championship-body.vivid-dashboard .tv-panel-title span{
+  font-size:clamp(10px,1.2vw,17px)!important;
+}
+body.championship-body.vivid-dashboard .tv-table-wrap{
+  flex:1 1 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table{
+  width:100%!important;
+  height:100%!important;
+  table-layout:fixed!important;
+  border-spacing:0 var(--tv-row-gap,4px)!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table thead th{
+  height:auto!important;
+  min-height:0!important;
+  font-size:var(--tv-head-size,22px)!important;
+  line-height:1!important;
+  padding:0 8px var(--tv-cell-padding-y,6px)!important;
+  font-weight:1000!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table tbody tr{
+  height:var(--tv-row-height,72px)!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table tbody td{
+  height:var(--tv-row-height,72px)!important;
+  min-height:0!important;
+  padding:var(--tv-cell-padding-y,5px) 10px!important;
+  line-height:1!important;
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-pos{
+  font-size:var(--tv-pos-size,28px)!important;
+  line-height:1!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-team strong{
+  font-size:var(--tv-name-size,34px)!important;
+  line-height:.94!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-points{
+  font-size:var(--tv-score-size,64px)!important;
+  line-height:.78!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-points small{
+  font-size:var(--tv-score-label-size,14px)!important;
+  margin-top:clamp(1px,.4vh,6px)!important;
+  line-height:1!important;
+}
+body.championship-body.vivid-dashboard.dashboard-dense .tv-scoreboard-titlebar,
+body.championship-body.vivid-dashboard.dashboard-ultra .tv-scoreboard-titlebar{
+  padding:6px 18px!important;
+}
+body.championship-body.vivid-dashboard.dashboard-dense .tv-scoreboard-titlebar h1,
+body.championship-body.vivid-dashboard.dashboard-ultra .tv-scoreboard-titlebar h1{
+  font-size:clamp(24px,3.2vw,46px)!important;
+}
+body.championship-body.vivid-dashboard.dashboard-ultra .tv-title-right span,
+body.championship-body.vivid-dashboard.dashboard-ultra .tv-panel-title span{
+  display:none!important;
+}

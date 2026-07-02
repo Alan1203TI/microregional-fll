@@ -317,6 +317,41 @@ function applyAdaptiveDashboard(count) {
   };
 
   Object.entries(vars).forEach(([key, value]) => root.style.setProperty(key, value));
+
+  // Ajuste real do placar principal da TV.
+  // Antes o painel apenas escondia o excesso; agora calculamos a altura disponível
+  // e reduzimos fonte/espaçamento conforme a quantidade de equipes para não precisar rolar.
+  const header = document.querySelector('.scoreboard-header');
+  const titlebar = document.querySelector('.tv-scoreboard-titlebar');
+  const panelTitle = document.querySelector('.tv-panel-title');
+  const tableHead = document.querySelector('.tv-score-table thead');
+
+  const usedHeight =
+    (header?.offsetHeight || 0) +
+    (titlebar?.offsetHeight || 0) +
+    (panelTitle?.offsetHeight || 0) +
+    (tableHead?.offsetHeight || 0) +
+    46;
+
+  const availableRowsHeight = Math.max(180, window.innerHeight - usedHeight);
+  const rowHeight = Math.max(26, Math.floor(availableRowsHeight / safeCount));
+
+  const scoreSize = Math.max(22, Math.min(88, Math.floor(rowHeight * 0.72)));
+  const nameSize = Math.max(15, Math.min(44, Math.floor(rowHeight * 0.38)));
+  const labelSize = Math.max(7, Math.min(18, Math.floor(rowHeight * 0.16)));
+  const posSize = Math.max(14, Math.min(36, Math.floor(rowHeight * 0.32)));
+  const headSize = Math.max(10, Math.min(28, Math.floor(rowHeight * 0.22)));
+  const padY = Math.max(1, Math.min(10, Math.floor(rowHeight * 0.06)));
+  const rowGap = Math.max(1, Math.min(7, Math.floor(rowHeight * 0.04)));
+
+  root.style.setProperty('--tv-row-height', `${rowHeight}px`);
+  root.style.setProperty('--tv-score-size', `${scoreSize}px`);
+  root.style.setProperty('--tv-name-size', `${nameSize}px`);
+  root.style.setProperty('--tv-score-label-size', `${labelSize}px`);
+  root.style.setProperty('--tv-pos-size', `${posSize}px`);
+  root.style.setProperty('--tv-head-size', `${headSize}px`);
+  root.style.setProperty('--tv-cell-padding-y', `${padY}px`);
+  root.style.setProperty('--tv-row-gap', `${rowGap}px`);
 }
 
 window.addEventListener('resize', () => {
