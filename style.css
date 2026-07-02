@@ -2866,3 +2866,31 @@ body.championship-body.vivid-dashboard.dashboard-ultra .tv-title-right span,
 body.championship-body.vivid-dashboard.dashboard-ultra .tv-panel-title span{
   display:none!important;
 }
+
+/* =========================================================
+   CORREÇÃO DE CORTE - ÚLTIMA EQUIPE SEMPRE VISÍVEL NA TV
+   ========================================================= */
+body.championship-body.vivid-dashboard .dashboard-results-only.tv-scoreboard-panel{
+  min-height:0!important;
+}
+body.championship-body.vivid-dashboard .tv-table-wrap{
+  box-sizing:border-box!important;
+  padding-bottom:6px!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table{
+  height:auto!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table tbody tr,
+body.championship-body.vivid-dashboard .tv-score-table tbody td{
+  max-height:var(--tv-row-height,72px)!important;
+  box-sizing:border-box!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-team strong,
+body.championship-body.vivid-dashboard .tv-score-table td.score-points,
+body.championship-body.vivid-dashboard .tv-score-table td.score-pos{
+  max-height:calc(var(--tv-row-height,72px) - 2px)!important;
+  overflow:hidden!important;
+}
+body.championship-body.vivid-dashboard .tv-score-table td.score-points small{
+  margin-top:2px!important;
+}

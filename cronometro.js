@@ -28,7 +28,18 @@ function getAudioContext() {
   return audioCtx;
 }
 
-function playTone(frequency = 880, duration = 0.16, delay = 0, volume = 0.18) {
+function connectLoudChain(ctx) {
+  const compressor = ctx.createDynamicsCompressor();
+  compressor.threshold.setValueAtTime(-30, ctx.currentTime);
+  compressor.knee.setValueAtTime(8, ctx.currentTime);
+  compressor.ratio.setValueAtTime(12, ctx.currentTime);
+  compressor.attack.setValueAtTime(0.003, ctx.currentTime);
+  compressor.release.setValueAtTime(0.18, ctx.currentTime);
+  compressor.connect(ctx.destination);
+  return compressor;
+}
+
+function playTone(frequency = 880, duration = 0.16, delay = 0, volume = 0.55, type = 'square') {
   if (!soundEnabled) return;
   const ctx = getAudioContext();
   if (!ctx || ctx.state === 'suspended') return;
@@ -38,31 +49,64 @@ function playTone(frequency = 880, duration = 0.16, delay = 0, volume = 0.18) {
   const start = ctx.currentTime + delay;
   const end = start + duration;
 
-  osc.type = 'sine';
+  osc.type = type;
   osc.frequency.setValueAtTime(frequency, start);
   gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(volume, start + 0.02);
+  gain.gain.exponentialRampToValueAtTime(Math.min(volume, 0.95), start + 0.015);
   gain.gain.exponentialRampToValueAtTime(0.0001, end);
 
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(connectLoudChain(ctx));
   osc.start(start);
-  osc.stop(end + 0.03);
+  osc.stop(end + 0.04);
 }
 
 function playWarningSound() {
-  playTone(920, 0.12, 0, 0.14);
+  // Bipe alto nos últimos segundos
+  playTone(1150, 0.18, 0, 0.72, 'square');
 }
 
 function playThirtySecondsWarning() {
-  playTone(740, 0.18, 0, 0.16);
-  playTone(740, 0.18, 0.24, 0.16);
+  // Dois avisos fortes aos 30 segundos
+  playTone(820, 0.25, 0, 0.68, 'square');
+  playTone(820, 0.25, 0.34, 0.68, 'square');
+}
+
+function playSirenLayer(startDelay = 0, baseFreq = 520, peakFreq = 1250, duration = 3.8, volume = 0.92) {
+  if (!soundEnabled) return;
+  const ctx = getAudioContext();
+  if (!ctx || ctx.state === 'suspended') return;
+
+  const start = ctx.currentTime + startDelay;
+  const end = start + duration;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = 'sawtooth';
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(volume, start + 0.04);
+
+  // Sirene tipo alarme: sobe/desce várias vezes, bem perceptível em TV/caixa de som.
+  for (let t = 0; t <= duration; t += 0.38) {
+    osc.frequency.linearRampToValueAtTime(peakFreq, start + t + 0.19);
+    osc.frequency.linearRampToValueAtTime(baseFreq, Math.min(end, start + t + 0.38));
+  }
+
+  gain.gain.setValueAtTime(volume, end - 0.18);
+  gain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+  osc.connect(gain);
+  gain.connect(connectLoudChain(ctx));
+  osc.start(start);
+  osc.stop(end + 0.06);
 }
 
 function playFinishedSound() {
-  playTone(520, 0.26, 0, 0.2);
-  playTone(520, 0.26, 0.32, 0.2);
-  playTone(520, 0.42, 0.64, 0.22);
+  // Sirene final bem alta e longa. Usa camadas para ficar mais forte.
+  playSirenLayer(0, 500, 1250, 4.2, 0.95);
+  playSirenLayer(0.04, 760, 1580, 4.0, 0.65);
+  playTone(420, 0.35, 4.25, 0.85, 'square');
+  playTone(420, 0.35, 4.68, 0.85, 'square');
 }
 
 function handleTimerSound(remaining, running) {
