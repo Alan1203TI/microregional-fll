@@ -40,6 +40,12 @@ const soundState = {
 let audioCtx = null;
 let soundEnabled = true;
 
+// Sirene final em MP3.
+// Salve o arquivo em: assets/audio/sirene.mp3
+const finalSirenAudio = new Audio('./assets/audio/sirene.mp3');
+finalSirenAudio.preload = 'auto';
+finalSirenAudio.volume = 1.0;
+
 function getAudioContext() {
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return null;
@@ -124,11 +130,32 @@ function playSirenLayer(startDelay = 0, baseFreq = 520, peakFreq = 1250, duratio
 }
 
 function playFinishedSound() {
-  // Sirene final bem alta e longa. Usa camadas para ficar mais forte.
-  playSirenLayer(0, 500, 1250, 4.2, 0.95);
-  playSirenLayer(0.04, 760, 1580, 4.0, 0.65);
-  playTone(420, 0.35, 4.25, 0.85, 'square');
-  playTone(420, 0.35, 4.68, 0.85, 'square');
+  if (!soundEnabled) return;
+
+  // Toca a sirene em MP3. Salve o arquivo em: assets/audio/sirene.mp3
+  // Importante: o navegador só libera áudio depois de algum clique/toque na página.
+  try {
+    finalSirenAudio.pause();
+    finalSirenAudio.currentTime = 0;
+    finalSirenAudio.volume = 1.0;
+
+    const playPromise = finalSirenAudio.play();
+
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {
+        // Reserva: se o MP3 não carregar ou for bloqueado, toca a sirene gerada pelo navegador.
+        playSirenLayer(0, 500, 1250, 4.2, 0.95);
+        playSirenLayer(0.04, 760, 1580, 4.0, 0.65);
+        playTone(420, 0.35, 4.25, 0.85, 'square');
+        playTone(420, 0.35, 4.68, 0.85, 'square');
+      });
+    }
+  } catch (error) {
+    playSirenLayer(0, 500, 1250, 4.2, 0.95);
+    playSirenLayer(0.04, 760, 1580, 4.0, 0.65);
+    playTone(420, 0.35, 4.25, 0.85, 'square');
+    playTone(420, 0.35, 4.68, 0.85, 'square');
+  }
 }
 
 function handleTimerSound(tableId, remaining, running) {
@@ -162,7 +189,7 @@ function handleTimerSound(tableId, remaining, running) {
 }
 
 ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
-  window.addEventListener(eventName, () => getAudioContext(), { once: true, passive: true });
+  window.addEventListener(eventName, () => { getAudioContext(); finalSirenAudio.load(); }, { once: true, passive: true });
 });
 
 function fmtDate(iso) {
